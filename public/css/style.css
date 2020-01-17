@@ -1,0 +1,69 @@
+
+  #onesearch{
+	  font-weight: bolder;
+	  font-size: 60px;
+  }
+
+  .title{
+	  min-height: 250px;
+  }
+
+  .shad{
+	box-shadow: 2px 3px 4px;
+	background-color:  #fff;
+	padding: 30px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+a:hover{
+	text-decoration: none !important;
+}
+
+
+.entry{
+	margin-top: 13px;
+}
+
+.purple-btn{
+	background-color: #4a2d43 !important;
+	border-color: #4a2d43 !important;
+}
+.purple-btn:hover{
+	background-color: #5f3a56 !important;
+	border-color: #5f3a56 !important;
+}
+.oneappimg{
+	height: 50px;
+}
+.topsignup{
+	color: #4a2d43;
+}
+.align{
+	align-items: center !important;
+}
+#addserve{
+	font-weight: bold;
+	color: #4a2d43;
+}
+.errors{
+    
+    color: red;
+    font-weight: bold;
+}
+.myheader {
+    min-height: 100vh;
+    width: 100vw;
+    background: black;
+    overflow: hidden;
+    background: #C33764;  /* fallback colour. Make sure this is just one solid colour. */
+    background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("../img/barber3.jpg") 0 0 fixed;
+	background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("../img/barber3.jpg")  0 0 fixed; /* The least supported option. */
+	
+}
+
+img {
+   object-fit: cover;
+}
+html, body {
+	overflow-x: hidden !important;
+}
