@@ -1,7 +1,7 @@
 
   #onesearch{
 	  font-weight: bolder;
-	  font-size: 60px;
+	  font-size: 20px;
   }
 
   .title{
@@ -9,8 +9,8 @@
   }
 
   .shad{
-	box-shadow: 2px 3px 4px;
-	background-color:  #fff;
+	box-shadow: 1px 1px 6px;
+	background-color:  #f5eff4;
 	padding: 30px;
     margin-bottom: 10px;
     margin-top: 20px;
@@ -27,6 +27,7 @@ a:hover{
 .purple-btn{
 	background-color: #4a2d43 !important;
 	border-color: #4a2d43 !important;
+	color: #fff !important;
 }
 .purple-btn:hover{
 	background-color: #5f3a56 !important;
@@ -35,35 +36,137 @@ a:hover{
 .oneappimg{
 	height: 50px;
 }
-.topsignup{
-	color: #4a2d43;
+.topsignup a{
+	color: #4a2d43 !important;
 }
 .align{
 	align-items: center !important;
 }
+.card-imgtop{
+	width: 60%;
+	border-radius: 50%;
+}
 #addserve{
 	font-weight: bold;
 	color: #4a2d43;
+}
+.dpurple{
+	color: #4a2d43;
+}
+.tint{
+	background-color: #f5eff4;
+	border-radius:2% ;
+}
+.myfooter{
+	font-weight: bold;
+	background-color: #C33764;
+	min-height: 20px;
+	padding: 0;
+	margin: 0;
+	width: 100;
 }
 .errors{
     
     color: red;
     font-weight: bold;
 }
-.myheader {
+.myheader{
+	min-height: 90vh;
+}
+body {
     min-height: 100vh;
     width: 100vw;
     background: black;
     overflow: hidden;
     background: #C33764;  /* fallback colour. Make sure this is just one solid colour. */
     background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("../img/barber3.jpg") 0 0 fixed;
-	background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("../img/barber3.jpg")  0 0 fixed; /* The least supported option. */
+	background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("../img/barber3.jpg")  0 0 fixed no-repeat center; /* The least supported option. */
 	
 }
 
-img {
-   object-fit: cover;
+a.nav-link{
+	font-weight: bolder;
+	color: white;
+}
+a.nav-link:hover,a.nav-link.active:hover{
+	color: violet;
+}
+a.nav-link.active{
+	border-bottom: 1px solid violet;
+	color: rgb(209, 82, 209);
 }
 html, body {
 	overflow-x: hidden !important;
 }
+.mainnav{
+	background-color: transparent;
+	width: 100%;
+	transition: top 0.6s;
+}
+
+.sticky{
+	background-color: #C33764;
+	position: fixed !important;
+	top: 0;
+	z-index: 999;
+	width: 100%;
+	transition:  2s;
+    
+}
+.artpage-card{
+	font-size: xx-small;
+}
+.push{
+	margin-top: 76px;
+}
+.scroll{
+	background-color: white;
+	min-height: 100vh !important;
+}
+.art-card{
+	border: 1px solid #C33764 !important;
+}
+td{
+	word-break: break-all;
+	line-height: 1.5em;
+	max-height: 3em;
+	overflow: hidden;
+	text-overflow: ellipsis ;
+	
+}
+.art-tab {
+	display: block;
+  }
+  
+  .art-tab td {
+	display: inline-block;
+  }
+  .artpage-cont{
+	  border-bottom: 1px solid #e6e6e6;
+	  margin: 0;
+	  color: black;
+	  margin-bottom: 3px;
+  }
+  @media only screen and (min-width: 768px) {
+	  .artpage-card{
+		  font-size: medium;
+	  }
+	  .artpage-cont{
+		border-bottom: 1px solid #e6e6e6;
+		margin: 0;
+		color: black;
+		margin-bottom: 10px;
+	}
+	.artisanpack{
+		margin:50px !important;
+	}
+	.myartimg{
+		width: 60% !important;
+		height: 200px;
+	}
+  }
+  .myartimg{
+	  width: 100%;
+	  height: 150px;
+  }
+

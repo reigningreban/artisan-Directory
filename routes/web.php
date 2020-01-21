@@ -23,3 +23,4 @@ Route::post('artisan/signup','artisanController@signup');
 Route::get('artisan/states','artisanController@getstates');
 Route::get('artisan/cities/{state_id}','artisanController@getcities');
 Route::get('artisan/services','artisanController@getservices');
+Route::view('/artisans','artisans');

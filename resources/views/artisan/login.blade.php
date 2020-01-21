@@ -10,7 +10,9 @@
                 <div class="col-md-4 col-sm-12 align-items-center">
                     <div class="shad mb-5 mt-5">
                         <div class="text-center topsignup">
-                            <h4 class="font-weight-bold align"><img src="{{asset('img/1app1.png')}}" alt="" class="oneappimg">SEARCH</h4>
+                            <a href="/">
+                                <h4 class="font-weight-bold align"><img src="{{asset('img/1app1.png')}}" alt="" class="oneappimg">SEARCH</h4>
+                            </a>
                         </div>
                         <h3 class="text-center">Login</h3>
                         <div class="errors">*All fields are required</div>

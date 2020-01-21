@@ -78,10 +78,6 @@ class artisanController extends Controller
             'registered'=>$time
         ]);
 
-        // $artisan_id=DB::table('artisans')
-        // ->where('email',$email)
-        // ->value('id');
-
         foreach ($services as $service ) {
             DB::table('offered_by')
             ->insert([
@@ -96,7 +92,7 @@ class artisanController extends Controller
             'artisan_id'=>$artisan_id,
             'number'=>$phone
         ]);
-
+        session()->flush();
         session()->put('artisan',$artisan_id);
 
         return redirect('artisan/dashboard');
@@ -165,5 +161,10 @@ class artisanController extends Controller
             
         }return redirect()->back()->with('pass_crash','Invalid email or password')->withInput();
         
+    }
+    public function logout()
+    {
+        session()->flush();
+        return redirect('/artisan/login');
     }
 }
