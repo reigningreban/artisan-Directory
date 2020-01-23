@@ -49,6 +49,14 @@
                             </div>
 
                             <div class="entry">
+                                <label for="slog">Slog:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="slog" name="slog" value="{{old('slog')}}" placeholder="a short unique name for your company...">
+                                </div>
+                                <div class="errors">{{$errors->first('slog')}} </div>
+                            </div>
+
+                            <div class="entry">
                                 <label for="email">Email:</label>
                                 <div class="input-group">
                                     <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">

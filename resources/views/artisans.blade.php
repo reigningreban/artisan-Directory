@@ -1,131 +1,74 @@
 @extends('nav')
 @section('artA','active')
-
+@section('pstyle')
+    <style>
+        .nopad{
+            padding-left:1% !important;
+            padding-right:1% !important;
+        }
+    </style>
+@endsection
 @section('body')
-    <div class="container-fluid scroll py-5">
+    <div class="container-fluid scroll py-5" id="nopad">
         <div class="container">
-            <input type="text" class="form-control" placeholder="Search...">
+            <input type="text" class="form-control" placeholder="Search..." id="search">
         </div>
-        <div class="row my-4 artisanpack">
-            <div class="col-6 mb-4 col-md-3 ">
-                <a href="#" class="">
-                    <div class="card text-center">
-                        <img class="card-imgtop myartimg" src="{{asset('img/tempavt.png')}}" alt="Card image" >
-                        <div class="card-body text-center">
-                            
-                            <div class=" text-center art-tab artpage-card">
-                                <p class="artpage-cont">businessname</p>
-                                <p class="artpage-cont">Tailor, carpenter</p>
-                                <p class="artpage-cont">businesslocation</p>
-                                <p class="artpage-cont">Address</p>
-                            </div>
-                            
-                            
-                            <a href="tel:0202020202020" class="btn btn-primary purple-btn" >Contact</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-6 mb-4 col-md-3">
-                <a href="#" class="">
-                    <div class="card text-center">
-                        <img class="card-imgtop myartimg" src="{{asset('img/tempavt.png')}}" alt="Card image">
-                        <div class="card-body text-center">
-                            
-                            <div class=" text-center art-tab artpage-card">
-                                <p class="artpage-cont">businessname</p>
-                                <p class="artpage-cont">Tailor, carpenter</p>
-                                <p class="artpage-cont">businesslocation</p>
-                                <p class="artpage-cont">Address</p>
-                            </div>
-                            
-                            
-                            <a href="tel:0202020202020" class="btn btn-primary purple-btn" >Contact</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-6 mb-4 col-md-3">
-                <a href="#" class="">
-                    <div class="card text-center">
-                        <img class="card-imgtop myartimg" src="{{asset('img/tempavt.png')}}" alt="Card image">
-                        <div class="card-body text-center">
-                            
-                            <div class=" text-center art-tab artpage-card">
-                                <p class="artpage-cont">businessname</p>
-                                <p class="artpage-cont">Tailor, carpenter</p>
-                                <p class="artpage-cont">businesslocation</p>
-                                <p class="artpage-cont">Address</p>
-                            </div>
-                            
-                            
-                            <a href="tel:0202020202020" class="btn btn-primary purple-btn" >Contact</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
+        <div class="container-fluid">
+            <div class="row my-4" id="art">
+                
+                
+                
             
-            <div class="col-6 mb-4 col-md-3 ">
-                <a href="#" class="">
-                    <div class="card text-center">
-                        <img class="card-imgtop myartimg" src="{{asset('img/tempavt.png')}}" alt="Card image" >
-                        <div class="card-body text-center">
-                            
-                            <div class=" text-center art-tab artpage-card">
-                                <p class="artpage-cont">businessname</p>
-                                <p class="artpage-cont">Tailor, carpenter</p>
-                                <p class="artpage-cont">businesslocation</p>
-                                <p class="artpage-cont">Address</p>
-                            </div>
-                            
-                            
-                            <a href="tel:0202020202020" class="btn btn-primary purple-btn" >Contact</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
+        
 
-            <div class="col-6 mb-4 col-md-3 ">
-                <a href="#" class="">
-                    <div class="card text-center">
-                        <img class="card-imgtop myartimg" src="{{asset('img/barber3.jpg')}}" alt="Card image" >
-                        <div class="card-body text-center">
-                            
-                            <div class=" text-center art-tab artpage-card">
-                                <p class="artpage-cont">businessname</p>
-                                <p class="artpage-cont">Tailor, carpenter</p>
-                                <p class="artpage-cont">businesslocation</p>
-                                <p class="artpage-cont">Address</p>
-                            </div>
-                            
-                            
-                            <a href="tel:0202020202020" class="btn btn-primary purple-btn" >Contact</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
-            <div class="col-6 mb-4 col-md-3 ">
-                <a href="#" class="">
-                    <div class="card text-center">
-                        <img class="card-imgtop myartimg" src="{{asset('img/1app1.png')}}" alt="Card image" >
-                        <div class="card-body text-center">
-                            
-                            <div class=" text-center art-tab artpage-card">
-                                <p class="artpage-cont">businessname</p>
-                                <p class="artpage-cont">Tailor, carpenter</p>
-                                <p class="artpage-cont">businesslocation</p>
-                                <p class="artpage-cont">Address</p>
-                            </div>
-                            
-                            
-                            <a href="tel:0202020202020" class="btn btn-primary purple-btn" >Contact</a>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('html,body').animate({ scrollTop: 0 }, 'slow');
+            $(document).on("keydown", "form", function(event) { 
+                return event.key != "Enter";
+            });
+            getartisans();
+            if($(window).width() < 800) {
+                $('#nopad').addClass('nopad');
+                
+              }else{
+              };
+            $("body").on("click",".page-link", function(e){
+                e.preventDefault();
+                var link=$(this).attr('href');
+                $.get(link, function(data, status){
+                    let myresult = ("Data: " + data + "\nStatus: " + status);
+                    document.getElementById('art').innerHTML =data;
+                    // $('html,body').animate({ scrollTop: 0 }, 'slow');
+                    $(document).scrollTop(0)
+                });
+            });
+
+            $("#search").keyup(function(){
+                var cat=$("#search").val();
+                if (cat!="") {
+                    var link="/artisans/search/";
+                    link+=cat;
+                    $.get(link, function(data, status){
+                        let myresult = ("Data: " + data + "\nStatus: " + status);
+                        document.getElementById('art').innerHTML =data;
+                    });
+                }else{
+                    getartisans();
+                }
+            });
+        });
+        function getartisans() {
+            $.get('/getartisans', function(data, status){
+                let myresult = ("Data: " + data + "\nStatus: " + status);
+                document.getElementById('art').innerHTML =data;
+
+            });
+        }
+    </script>
 @endsection

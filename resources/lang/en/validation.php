@@ -161,6 +161,7 @@ return [
         ],
         'repass' => [
             'required_with' => 'Please re-enter your password',
+            'same'=>'Both passwords must match'
         ],
         'address' => [
             'required' => 'Please enter your business address',
@@ -173,6 +174,15 @@ return [
         ],
         'services' => [
             'required' => 'Please select at least one service',
+        ],
+        'descrip' => [
+            'required' => 'You did not add a Description',
+        ],
+        'oldpass' => [
+            'required' => 'Please Enter your current password',
+        ],
+        'newpass' => [
+            'required' => 'Please Enter your new password',
         ],
 
     ],
