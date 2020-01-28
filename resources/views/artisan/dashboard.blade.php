@@ -1,66 +1,6 @@
-@extends('layout')
+@extends('artisan/dashlay')
 @section('title','dashboard')
-@section('pstyle')
-    <link rel="stylesheet" href="{{asset('css/style2.css')}}">
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-    <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <style>
-      body{
-        font-size:smaller !important;
-      }
-      @media (max-width: 768px) {
-        body{
-          font-size:X-small !important;
-        }
-      }
-    </style>
-@endsection
-
-@section('content')
-
-  <div class="wrapper">
-      <!-- Sidebar  -->
-      <nav id="sidebar" class="active">
-          <div class="sidebar-header">
-              <div class="imgcont text-center">
-                <img src="{{asset('img/tempavt.png')}}" alt="my img" class="profnav">
-              </div>
-              <p class="text-center">{{$artisan->companyname}}</p>
-          </div>
-
-          <ul class="list-unstyled components">
-              
-              <li>
-                  <a href="/artisan/dashboard" class="active">My Profile </a>
-              </li>  
-              <li>
-                  <a href="#" class="">My Reviews </a>
-              </li>             
-          </ul>
-      
-      </nav>
-      <!-- End sidebar -->
-
-      <!-- Page Content  -->
-      <!-- top nav -->
-      <nav id="dashnav">
-        <span id="content">
-        <button type="button" id="sidebarCollapse" class="btn btn-info purple-btn">
-              <i class="fas fa-bars"></i>
-              <span>Menu</span>
-            </button>
-            <a href="/artisan/logout" id="logout" class="btn btn-info purple-btn">
-              <i class="fas fa-power-off"></i>
-              <span>Logout</span>
-            </a>
-      </span>
-
-      
-      </nav>
+@section('body')
       <!-- end topnav -->
 
       <!-- contanerfluid -->
@@ -77,17 +17,27 @@
                   <div class="col-3 col-md-1"></div>
                   <div class="col-md-4 col-6">
                     <div class="imgcont text-center">
-                      <img src="{{asset('img/tempavt.png')}}" alt="" class="profimg">
+                      <img src="@if(null!=$artisan->displaypicture) {{asset($artisan->displaypicture)}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profimg fixedimg" id="profimg">
+                      <div class="text-right">
+                        <span id="prfimg" class="btn purple-btn"><i class="fas fa-edit" id="load"></i></span>
+                      </div>
+                        
+                      
+                      
                     </div>
+                    <form action="/artisan/picupload" method="post" id="imageform" enctype="multipart/form-data">
+                        <input type="file" accept="image/*" name="image" id="upprfimg" class="invisible">
+                        <div class="errors text-center">{{$errors->first('image')}}</div>
+                        @csrf
+                      </form>
                   </div>
                   <div class="col-md-1"></div>
-                  <div class="col-md-6 col-12">
+                  <div class="col-md-6 col-12 mt-2">
                   @if (\Session::has('success'))
                             <div class="alert alert-success prompt">
-                                <div class="text-right text-danger"><i class="fas fa-times fa-lg" id="close"></i></div>
-                                <ul>
-                                    <li>{!! \Session::get('success') !!}</li>
-                                </ul>
+                                <div class="text-right text-danger"><i class="fas fa-times fa-2x" id="close"></i></div>
+                                {!! \Session::get('success') !!}
+                                
                                 
                             </div>
                         @endif
@@ -134,9 +84,9 @@
 
 
             <div class="row">
-              <div class="col-md-6 col-12" id="des">
+              <div class="col-md-12 col-12" id="des">
                 <div class="row">
-                  <div class="col-md-12" id="passch">
+                  <div class="col-md-6 col-12" id="passch">
                       <div class="table-responsive shad2">
                         <form action="/artisan/editdes" method="post">
                         <table class="table">
@@ -148,7 +98,7 @@
                             <td>Description:</td>
                             <td>
                               <textarea name="descrip" id="descrip" cols="30" rows="5" maxlength="150" placeholder="@if(($artisan->description)==null)Description not added @endif">@if($artisan->description!=null){{$artisan->description}}@endif</textarea>
-                              <div class="text-right"><button class="btn purple-btn">Edit</button></div>
+                              <div class="text-right"><button class="btn purple-btn" onclick="this.innerHTML='Loading...'">Edit</button></div>
                               <div class="errors text-center">{{$errors->first('descrip')}} </div>
                             </td>
                           </tr>
@@ -157,9 +107,9 @@
                       </form>
                       </div>
                     </div>
-                  </div>
+                  
 
-                  <div class="col-md-12 col-12 shad2 nopad">
+                  <div class="col-md-5 col-12 shad2 nopad">
                 <h3 class="text-center">Change Password</h3>
                 <form action="/artisan/changepass" method="post">
                   <div class="entry">
@@ -192,17 +142,17 @@
                   @csrf
                 </form>
               </div>
-                  
+</div>
 
                 </div>
-                <div class="col-md-5 col-12" id="passch">
+                <!-- <div class="col-md-5 col-12" id="passch">
                     <div class="col-md-12 col-12 shad2">
                       <h4 class="text-center">Rating</h4>
                     </div>
                     <div class="col-md-12 col-12 shad2">
                       <h4 class="text-center">Reviews</h4>
                     </div>
-                </div>
+                </div> -->
               
     
               <!-- endsecondrow -->
@@ -211,41 +161,11 @@
  <!-- endcontainer -->
         </div>
          <!-- endcontainerfluid -->
-      </div>
-     <!-- endwrapper -->
-  </div>
+      
 
   
   
-    <footer class="footer dashfoot text-center text-white py-3">
-            copyright©O'bounce Tech 2020
-       </footer>
+    
             
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#sidebar").mCustomScrollbar({
-                theme: "minimal"
-            });
-
-            
-
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar, #content, #dashnav').toggleClass('active');
-                $('.collapse.in').toggleClass('in');
-                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-            });
-
-            
-              if($(window).width() < 800) {
-                $('#mytab').addClass('table-sm');
-                $('#mytab').addClass('mt-4');
-              }else{
-                $('#des').addClass('mr-3');
-                $('#passch').addClass('ml-3');
-              }
-        });
-        $("body").on("click","#close", function(){
-              $('.prompt').hide();
-            })
-    </script>
+   
 @endsection

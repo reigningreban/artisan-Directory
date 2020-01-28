@@ -15,6 +15,9 @@
     margin-bottom: 10px;
     margin-top: 20px;
 }
+.invisible{
+	display: none;
+}
 .shad2{
 	box-shadow: 1px 1px 6px;
 	background-color:  #fff;
@@ -39,6 +42,15 @@ a:hover{
 .purple-btn:hover{
 	background-color: #5f3a56 !important;
 	border-color: #5f3a56 !important;
+}
+.pink-btn{
+	background-color: #C33764 !important;
+	border-color: #C33764 !important;
+	color: #fff !important;
+}
+.pink-btn:hover{
+	background-color: #8b2747 !important;
+	border-color: #8b2747 !important;
 }
 .oneappimg{
 	height: 50px;
@@ -72,6 +84,7 @@ a:hover{
 	margin: 0;
 	width: 100;
 }
+
 .dashfoot{
 	background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8),rgba(29, 38, 113, 0.8)), url("../img/barber3.jpg") 0 0 fixed;
 	background: linear-gradient(rgba(29, 38, 113, 0.8),rgba(29, 38, 113, 0.8)), url("../img/barber3.jpg")  0 0 fixed no-repeat center; /* The least supported option. */
@@ -132,6 +145,7 @@ html, body {
 }
 .artpage-card{
 	font-size: xx-small;
+	background-color: #e6e6e6 !important;
 }
 .push{
 	margin-top: 76px;
@@ -147,6 +161,7 @@ html, body {
   @media only screen and (min-width: 768px) {
 	  .artpage-card{
 		  font-size: medium;
+		  background-color: #e6e6e6 !important;
 	  }
 	  
 	
@@ -155,6 +170,11 @@ html, body {
 	}
 	.artisanpack{
 		margin:50px !important;
+	}
+	.profimg{
+		width: 100%;
+		border-radius: 50%;
+		border: 3px solid turquoise;
 	}
 	.infopar{
 		padding: 0;

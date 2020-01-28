@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Session;
+use Cookie;
+use App\Http\Requests;
+use Image;
 class artisanController extends Controller
 {
 
@@ -124,7 +127,7 @@ class artisanController extends Controller
             'bizname'=>'required',
             'slog'=>'required|unique:artisans,slog',
             'email'=>'required|email|unique:artisans,email',
-            'phone'=>'required|unique:artisans,phone_no',
+            'phone'=>'required|numeric|digits:11|unique:artisans,phone_no',
             'password'=>'required',
             'repass'=>'required_with:password|same:password',
             'address'=>'required',
@@ -193,7 +196,7 @@ class artisanController extends Controller
                 'bizname'=>'required',
                 'slog'=>'required|unique:artisans,slog'.",$artisan->ID",
                 'email'=>'required|email|unique:artisans,email'.",$artisan->ID",
-                'phone'=>'required|unique:artisans,phone_no'.",$artisan->ID",
+                'phone'=>'required|numeric|digits:11|unique:artisans,phone_no'.",$artisan->ID",
                 'address'=>'required',
                 'state'=>'required',
                 'city'=>'required',
@@ -244,7 +247,7 @@ class artisanController extends Controller
             }
             
 
-            return redirect('artisan/dashboard')->with('success','Profile has been successfully edited');
+            return redirect('artisan/dashboard')->with('success','Profile has been successfully updated');
         }
     }
 
@@ -284,7 +287,7 @@ class artisanController extends Controller
     //my test function
     public function tester()
     {
-        
+        dd(ini_get('post_max_size'));
     }
 
     //funtion to get the registered services
@@ -378,6 +381,10 @@ class artisanController extends Controller
                 ->value('id');
 
                 session()->put('artisan',$artisan_id);
+                if (request('remember')!= null and (request('remember')=='remember')) {
+                    $remember=request('remember');
+                    Cookie::queue('email', $email,270000);
+                }
                 
                 return redirect('artisan/dashboard');
             }else{
@@ -459,5 +466,45 @@ class artisanController extends Controller
        }
 
 
+    }
+
+
+    //upload picture
+    public function picupload(Request $request)
+    {
+        if (!$this->checker()) {
+            return redirect('/artisan/login');
+        }else {
+            $artisan_id=session()->get('artisan');
+            $data=request()->validate([
+                'image'=>'bail|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+            $image=request('image');
+
+            $name = time().'.'.$image->extension(); 
+        
+            $destinationPath = public_path('/pics/thumbs');
+            $img = Image::make($image->getRealPath());
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$name);
+    
+            $destinationPath = public_path('pics/artisan/display/');
+            $image->move($destinationPath, $name);
+    
+   
+            $thumblink="/pics/thumbs".$name;
+            $link="pics/artisan/display/".$name;
+
+            
+            
+            DB::table('artisans')
+            ->where('id',$artisan_id)
+            ->update([
+                'displaypicture'=>$link,
+            ]);
+
+            return redirect()->back()->with('success','Image has been successfully uploaded');
+        }
     }
 }

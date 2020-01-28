@@ -46,6 +46,9 @@
                     document.getElementById('art').innerHTML =data;
                     // $('html,body').animate({ scrollTop: 0 }, 'slow');
                     $(document).scrollTop(0)
+                    $('.fixedimg').height(function () {
+                        return $(this).width();
+                    });
                 });
             });
 
@@ -57,7 +60,11 @@
                     $.get(link, function(data, status){
                         let myresult = ("Data: " + data + "\nStatus: " + status);
                         document.getElementById('art').innerHTML =data;
+                        $('.fixedimg').height(function () {
+                        return $(this).width();
                     });
+                    });
+                    
                 }else{
                     getartisans();
                 }
@@ -67,7 +74,9 @@
             $.get('/getartisans', function(data, status){
                 let myresult = ("Data: " + data + "\nStatus: " + status);
                 document.getElementById('art').innerHTML =data;
-
+                $('.fixedimg').height(function () {
+                        return $(this).width();
+                    });
             });
         }
     </script>

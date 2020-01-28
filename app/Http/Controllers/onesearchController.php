@@ -29,11 +29,16 @@ class onesearchController extends Controller
                         <div class='col-1'></div>
                         <div class='col-10 mb-4 art-card card'>
                             <div class='row align-items-center'>
-                                <div class='imgcover text-center col-5'>
-                                    <img src=".asset('img/tempavt.png')." alt='no img' class='home-card-img'>
-                                </div>
+                                <div class='imgcover text-center col-5'>";
+                                    if(null!=$artisan->displaypicture) {
+                                        $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                                    }
+                                     else {
+                                        $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
+                                     }
+                                $result.="  </div>
                                 <div class='col-7 infoside text-left'>
-                                    <p class='infopar'>$artisan->companyname</p>
+                                    <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
                                     <p class='infopar'>$artisan->services</p>
                                     <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                     <p class='infopar'>$artisan->address</p>
@@ -71,13 +76,16 @@ class onesearchController extends Controller
                     <div class='row pr-2 pl-2'>
                         <div class='col-12 mb-4  card artpage-card'>
                             <div class='row align-items-center'>
-                                <div class='imgcover text-center col-5'>
-                                    
-                                        <img src=".asset('img/tempavt.png')." alt='no img' class='home-card-img'>
-                                    
-                                </div>
+                            <div class='imgcover text-center col-5'>";
+                            if(null!=$artisan->displaypicture) {
+                                $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                            }
+                             else {
+                                $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
+                             }
+                        $result.="  </div>
                                 <div class='col-7 infoside text-left'>
-                                    <p class='infopar'>$artisan->companyname</p>
+                                    <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
                                     <p class='infopar'>$artisan->services</p>
                                     <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                     <p class='infopar'>$artisan->address</p>
@@ -90,7 +98,7 @@ class onesearchController extends Controller
                 </div>";
                 
         }
-        $result.="<div class='col-12 text-center'>". $artisans->links()." </div>";
+        $result.="<div class='col-12 text-center col-md-12'>". $artisans->links()." </div>";
         return $result;
     }
 
@@ -98,7 +106,7 @@ class onesearchController extends Controller
     public function search($stuff)
     {
         $words=explode(" ",$stuff);
-        $head="CONCAT_WS( ' ',states.state, cities.city, artisans.address, artisans.companyname, services.service)";
+        $head="CONCAT_WS( ' ',states.state, cities.city, artisans.address, artisans.companyname, services.service, artisans.slog)";
         $query="$head LIKE ";
         foreach ($words as $word ) {
             $query.="'%$word%' and $head LIKE ";
@@ -113,7 +121,6 @@ class onesearchController extends Controller
         ->select('artisans.id as ID','artisans.*','states.*','cities.*', DB::raw("group_concat(DISTINCT services.service ORDER BY services.service DESC SEPARATOR ', ') as services"))
         ->groupBy('artisans.id')
         ->whereRaw(DB::raw($query));
-        
         $count=$data->count();
         if ($count>0) {
             $artisans=$data->simplepaginate(20);
@@ -124,13 +131,16 @@ class onesearchController extends Controller
                         <div class='row pr-2 pl-2'>
                             <div class='col-12 mb-4  card'>
                                 <div class='row align-items-center'>
-                                    <div class='imgcover text-center col-5'>
-                                        
-                                            <img src=".asset('img/tempavt.png')." alt='no img' class='home-card-img'>
-                                        
-                                    </div>
+                                <div class='imgcover text-center col-5'>";
+                                if(null!=$artisan->displaypicture) {
+                                    $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                                }
+                                 else {
+                                    $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
+                                 }
+                            $result.="  </div>
                                     <div class='col-7 infoside text-left'>
-                                        <p class='infopar'>$artisan->companyname</p>
+                                        <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
                                         <p class='infopar'>$artisan->services</p>
                                         <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                         <p class='infopar'>$artisan->address</p>
@@ -143,7 +153,7 @@ class onesearchController extends Controller
                     </div>";
                     
             }
-            $result.="<div>". $artisans->links()." </div>";
+            $result.="<div class='col-12'>". $artisans->links()." </div>";
             
         }else {
             $result="<div class='col-12 errors text-center'>No artisans found</div>";

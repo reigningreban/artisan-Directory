@@ -1,64 +1,17 @@
-@extends('layout')
-@section('title','dashboard')
-@section('pstyle')
-    <link rel="stylesheet" href="{{asset('css/style2.css')}}">
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-    <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <style>
+@extends('artisan/dashlay')
+@section('title','Edit Profile')
+@section('perstyle')
+<style>
       body{
-        font-size:smaller !important;
+        font-size:small !important;
       }
+      
       @media (max-width: 768px) {
         
       }
     </style>
 @endsection
-
-@section('content')
-
-  <div class="wrapper">
-      <!-- Sidebar  -->
-      <nav id="sidebar" class="active">
-          <div class="sidebar-header">
-              <div class="imgcont text-center">
-                <img src="{{asset('img/tempavt.png')}}" alt="my img" class="profnav">
-              </div>
-              <p class="text-center">{{$artisan->companyname}}</p>
-          </div>
-
-          <ul class="list-unstyled components">
-              
-              <li>
-                  <a href="/artisan/dashboard" class="active">My Profile </a>
-              </li>  
-              <li>
-                  <a href="#" class="">My Reviews </a>
-              </li>             
-          </ul>
-      
-      </nav>
-      <!-- End sidebar -->
-
-      <!-- Page Content  -->
-      <!-- top nav -->
-      <nav id="dashnav">
-        <span id="content">
-        <button type="button" id="sidebarCollapse" class="btn btn-info purple-btn">
-              <i class="fas fa-bars"></i>
-              <span>Menu</span>
-            </button>
-            <a href="/artisan/logout" id="logout" class="btn btn-info purple-btn">
-              <i class="fas fa-power-off"></i>
-              <span>Logout</span>
-            </a>
-      </span>
-
-      
-      </nav>
+@section('body')
       <!-- end topnav -->
 
       <!-- contanerfluid -->
@@ -75,13 +28,13 @@
 
                             <div class="entry">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-12 col-md-6">
                                         <label for="firstname" class="">Firstname:</label>
                                         <div class="input-group">
                                             <input type="text" name="firstname" id="firstname" class="form-control" value="@if(null!==old('firstname')) {{old('firstname')}} @else {{$artisan->firstname}} @endif">
                                         </div>                                    
                                     </div>
-                                    <div class="col">
+                                    <div class="col-12 col-md-6">
                                         <label for="lastname" class="">Lastname:</label>
                                         <div class="input-group">
                                             <input type="text" name="lastname" id="lastname" class="form-control" value="@if(null!==old('lastname')) {{old('lastname')}} @else {{$artisan->lastname}} @endif">
@@ -101,7 +54,7 @@
                             </div>
 
                             <div class="entry">
-                                <label for="slog">Slog:</label>
+                                <label for="slog">Slug:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="slog" name="slog" value="@if(null!==old('slog')) {{old('slog')}} @else {{$artisan->slog}} @endif" placeholder="a short unique name for your company...">
                                 </div>
@@ -164,7 +117,7 @@
                             <div class="errors">{{$errors->first('services')}} </div>
 
                             <div class="entry text-center mt-5 mb-5">
-                                <button class="btn btn-primary btn-block purple-btn"><i class="fas fa-user-edit"></i> Edit</button>
+                                <button class="btn btn-primary btn-block purple-btn" onclick="this.innerHTML='Loading...'"><i class="fas fa-user-edit"></i> Update</button>
                             </div>
                             @csrf
                         </form>
@@ -176,28 +129,17 @@
                 <div class="col-md-3 col-sm-12"></div>
             </div>
         </div>
-      </div>
-     <!-- endwrapper -->
-  </div>
+
+        </div>
+      
 
   
   
-    <footer class="footer dashfoot text-center text-white py-3">
-            copyright©O'bounce Tech 2020
-       </footer>
+    
             
-    <script type="text/javascript">
+        <script type="text/javascript">
         $(document).ready(function () {
-            $("#sidebar").mCustomScrollbar({
-                theme: "minimal"
-            });
-
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar, #content, #dashnav').toggleClass('active');
-                $('.collapse.in').toggleClass('in');
-                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-            });
-
+            
             $.get('/artisan/statesedit', function(data, status){
                 let myresult = ("Data: " + data + "\nStatus: " + status);
                 document.getElementById('state').innerHTML =data;

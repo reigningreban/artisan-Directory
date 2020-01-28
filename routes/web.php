@@ -30,6 +30,7 @@ Route::post('artisan/signup','artisanController@signup');
 Route::post('/artisan/editprofile','artisanController@editprofile');
 Route::post('/artisan/editdes','artisanController@editdescription');
 Route::post('/artisan/changepass','artisanController@changepass');
+Route::post('/artisan/picupload','artisanController@picupload');
 Route::get('artisan/states','artisanController@getstates');
 Route::get('artisan/statesedit','artisanController@getstatesedit');
 Route::get('artisan/cities/{state_id}','artisanController@getcities');

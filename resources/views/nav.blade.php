@@ -47,7 +47,7 @@
 
     @yield('body')
        <footer class="footer myfooter text-center text-white py-3">
-            copyright©O'bounce Tech 2020
+            copyright©O'Bounce Tech 2020
        </footer>
     
 @endsection

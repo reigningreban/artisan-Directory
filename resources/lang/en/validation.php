@@ -134,23 +134,26 @@ return [
             'rule-name' => 'custom-message',
         ],
         'firstname' => [
-            'required' => 'Please enter your Names',
+            'required' => 'Please enter your names',
         ],
         'lastname' => [
-            'required_with' => 'Please enter your Names',
+            'required_with' => 'Please enter your names',
         ],
         'bizname' => [
             'required' => 'Please enter the name of your business',
-            'unique'=>' This Business name has been taken by another user'
+        ],
+        'slog' => [
+            'required' => 'Please enter a slug for your business',
+            'unique'=>'This slug has been taken please try another'
         ],
         'email' => [
             'required' => 'Please enter your E-mail address',
             'email'=> 'Please enter a valid E-mail address',
             'unique'=>' This E-mail address has been taken by another user',
-            'exists'=>'Invalid email or password'
+            'exists'=>'Invalid E-mail or password'
         ],
         'phone' => [
-            'required' => 'Please enter your phone Number',
+            'required' => 'Please enter your phone number',
             'unique'=>' This phone number has been taken by another user'
         ],
         'password' => [ 
@@ -183,6 +186,12 @@ return [
         ],
         'newpass' => [
             'required' => 'Please Enter your new password',
+        ],
+        'image' => [
+            'required' => 'Please select a picture',
+            'image' => 'Please select an image file',
+            'mimes' => 'Please select an image  file',
+            'max' => 'Your file is too large please select an image < 2mb',
         ],
 
     ],

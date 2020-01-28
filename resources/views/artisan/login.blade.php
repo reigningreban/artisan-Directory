@@ -23,7 +23,7 @@
                             <div class="entry">
                                 <label for="email">E-mail:</label>
                                 <div class="input-group">
-                                    <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
+                                    <input type="email" class="form-control" id="email" name="email" value="@if(Cookie::get('email') !== null){{Cookie::get('email') }} @else{{old('email')}} @endif">
                                 </div>
                                 
                             </div>
@@ -37,7 +37,7 @@
                                             <i id="eyecon" class="fas fa-eye-slash"></i>
                                         </span>
                                     </div>
-                                    <input type="password" class="form-control" id="lpassword" name="lpassword">
+                                    <input type="password" class="form-control" id="lpassword" name="lpassword" @if(Cookie::get('email') !== null) autofocus @endif >
                                 </div>
                                 <div class="errors">{{$errors->first()}} </div>
                                 <div class="errors">@if (\Session::has('pass_crash')) {!! \Session::get('pass_crash') !!}@endif</div>

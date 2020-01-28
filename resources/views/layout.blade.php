@@ -22,7 +22,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     
-   
+   <style>
+       #loadback{
+            width: 100%;
+            height: 100vh;
+            background-color: #fff;
+            z-index: 99999;
+            position: fixed;
+            top: 0;
+        }
+        #loader{
+            width: 100%;
+            height:100vh;
+        }
+   </style>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -37,6 +50,15 @@
 	<title>@yield('title','1search')</title>
 </head>
 <body>
+    <div class="container-fluid" id="loadback">
+        <i class="fa fa-circle-notch fa-spin" id="loader"></i>
+    </div>
+
 @yield('content')
+<script>
+    $(window).load(function () {
+        $('#loadback').hide();
+    });
+</script>
 </body>
 </html>

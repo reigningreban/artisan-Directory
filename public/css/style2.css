@@ -142,10 +142,15 @@ a.article:hover {
 .scroll{
     padding-top: 5%;
 }
+#prfimg{
+    padding: 1%;
+}
 #logout{
     float: right;
 }
-
+.close{
+    cursor: pointer;
+}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -172,7 +177,7 @@ a.article:hover {
     #passch{
         padding: 0%!important;
     }
-
+    
     #sidebar {
         margin-left: 0;
         position: fixed;

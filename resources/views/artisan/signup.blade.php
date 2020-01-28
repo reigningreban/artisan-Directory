@@ -92,6 +92,7 @@
                                 <label for="address">Address:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="address" name="address" value="{{old('address')}}">
+                                    <input type="hidden" name="longitude" id="longitude"><input type="hidden" name="latitude" id="latitude">
                                 </div>
                                 <div class="errors">{{$errors->first('address')}} </div>
                             </div>
@@ -151,7 +152,8 @@
                     let myresult = ("Data: " + data + "\nStatus: " + status);
                     document.getElementById('services').innerHTML =data;
             });
-            $('#services').hide();           
+            $('#services').hide();
+            getLocation();
         });
 
         $("body").on("change","#state", function(){
@@ -173,5 +175,17 @@
             }
             
         })
+        function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+            alert("Geolocation is not supported by this browser.");
+        }
+        }
+
+        function showPosition(position) {
+            $('#longitude').val(position.coords.latitude);
+            $('#latitude').val(position.coords.longitude);
+        }
     </script>
 @endsection
