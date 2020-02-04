@@ -28,6 +28,8 @@ class onesearchArtisanSeeder extends Seeder
         //         'registered'=>strtotime('now'),
         //     ]);
         // }
+        $lat=7.348720;
+        $lon=3.879290;
 
         $artisans=DB::table('artisans')
         ->get();
@@ -35,7 +37,8 @@ class onesearchArtisanSeeder extends Seeder
             DB::table('artisans')
             ->where('id',$artisan->id)
             ->update([
-                'slog'=>str::random(10)
+                'latitude'=>$lat,
+                'longitude'=>$lon
             ]);
         }
     }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use Cookie;
+use Geographical;
 use App\Http\Requests;
 use Image;
 class artisanController extends Controller
@@ -133,7 +134,10 @@ class artisanController extends Controller
             'address'=>'required',
             'state'=>'required',
             'city'=>'required',
-            'services'=>'required'
+            'services'=>'required_without:others',
+            'others'=>'',
+            'longitude'=>'numeric',
+            'latitude'=>'numeric',
         ]);
 
         $time=strtotime('now');
@@ -148,6 +152,8 @@ class artisanController extends Controller
         $city=request('city');
         $services=request('services');
         $slog=request('slog');
+        
+        
 
         $artisan_id= DB::table('artisans')
         ->insertGetId([
@@ -162,7 +168,26 @@ class artisanController extends Controller
             'registered'=>$time,
             'phone_no'=>$phone
         ]);
-
+        
+        if ((request('longitude')!=null)&&(request('latitude')!=null)) {
+            $longitude=request('longitude');
+            $latitude=request('latitude');
+            DB::table('artisans')
+            ->where('id',$artisan_id)
+            ->update([
+                'longitude'=>$longitude,
+                'latitude'=>$latitude
+            ]);
+        }
+        if(request('others')!=null){
+            $others=request('others');
+            DB::table('suggested_services')
+            ->insert([
+                'service'=>$others,
+                'artisan_id'=>$artisan_id
+            ]);
+        }
+        if($services!=null){
         foreach ($services as $service ) {
             DB::table('offered_by')
             ->insert([
@@ -170,7 +195,7 @@ class artisanController extends Controller
                 'service_id'=>$service
             ]);
         }
-        
+    }
 
         
         session()->flush();
@@ -284,11 +309,42 @@ class artisanController extends Controller
         }
     }
 
+
+    public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+        if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+          return 0;
+        }
+        else {
+          $theta = $lon1 - $lon2;
+          $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+          $dist = acos($dist);
+          $dist = rad2deg($dist);
+          $miles = $dist * 60 * 1.1515;
+          $unit = strtoupper($unit);
+      
+          if ($unit == "K") {
+            return ($miles * 1.609344);
+          } else if ($unit == "N") {
+            return ($miles * 0.8684);
+          } else {
+            return $miles;
+          }
+        }
+      }
     //my test function
     public function tester()
     {
-        dd(ini_get('post_max_size'));
-    }
+        $lat=7.348720;
+        $lon=3.879290;
+        $person=DB::table('artisans')
+        ->where('id',107)
+        ->first();
+        $distance=$this->distance($lat,$lon,7.3623007000000005,3.8562822,"K");
+        echo($distance);
+        
+        
+
+        }
 
     //funtion to get the registered services
     public function getservices()
@@ -307,6 +363,15 @@ class artisanController extends Controller
                 </div>
             ";
         }
+            $data.="
+            <div class='col-md-4 col-6'>
+                <div class='form-check'>
+                    <label class='form-check-label'>
+                        <input type='checkbox' name='' class='form-check-input' id='othercheck'>others
+                    </label>
+                </div>
+            </div>
+        ";
         $data.="</div>";
         $data.="<div class='text-center'>Check the box(es) that best describe your business</div>";
         return $data;
@@ -409,14 +474,21 @@ class artisanController extends Controller
         }else{
             $id=session()->get('artisan');
             $artisan=DB::table('artisans')
-            ->join('offered_by','offered_by.artisan_id','=','artisans.id')
-            ->join('services','services.id','=','offered_by.service_id')
+            ->leftJoin('offered_by','artisans.id','=','offered_by.artisan_id','left outer')
+            ->leftjoin('services','services.id','=','offered_by.service_id')
             ->join('cities','cities.id','=','artisans.city_id')
             ->join('states','states.id','=','cities.state_id')
             ->select('artisans.id as ID','artisans.*','states.*','cities.*', DB::raw("group_concat(DISTINCT services.service ORDER BY services.service DESC SEPARATOR ', ') as services"))
             ->groupBy('artisans.id')
             ->where('artisans.id',$id)
             ->first();
+            if ($artisan->services == null) {
+                DB::table('artisans')
+                ->where('id',$id)
+                ->update([
+                    'enabled'=>0,
+                ]);
+            }
             return view('/artisan/dashboard',[
                 'artisan'=>$artisan,
             ]);

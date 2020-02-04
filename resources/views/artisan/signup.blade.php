@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="entry">
-                                <label for="slog">Slog:</label>
+                                <label for="slog">Slug:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="slog" name="slog" value="{{old('slog')}}" placeholder="a short unique name for your company...">
                                 </div>
@@ -118,13 +118,17 @@
                             </div>
 
                             <div class="entry text-center mt-5">
-                                <label for="" id="addserve">Add Services <i class="fas fa-chevron-right" id="adserveicon"></i></label><br>
+                                <label for="" id="addserve">Add Services <i class="fas fa-chevron-down" id="adserveicon"></i></label><br>
                                 <span class="text-danger">*select at least one</span>
                             </div>
                             <div class="input-group" id="services">
                                 
                             </div>
+                            <div class="input-group" id="otherserve">
+                                <input type="text" name="others" placeholder="suggest a new service..." id="othertext">
+                            </div>
                             <div class="errors">{{$errors->first('services')}} </div>
+                            <div class="errors">{{$errors->first('others')}} </div>
 
                             <div class="entry text-center mt-5 mb-5">
                                 <button class="btn btn-primary btn-block purple-btn">Signup</button>
@@ -144,6 +148,7 @@
     </header>
     <script>
         $(document).ready(function() {
+            $('#otherserve').hide();
             $.get('/artisan/states', function(data, status){
                 let myresult = ("Data: " + data + "\nStatus: " + status);
                 document.getElementById('state').innerHTML =data;
@@ -152,7 +157,7 @@
                     let myresult = ("Data: " + data + "\nStatus: " + status);
                     document.getElementById('services').innerHTML =data;
             });
-            $('#services').hide();
+            // $('#services').hide();
             getLocation();
         });
 
@@ -163,18 +168,27 @@
                 document.getElementById('city').innerHTML =data;
             });
         });
+        $("body").on("change","#othercheck", function(){
+           if(this.checked){
+               $('#otherserve').show(500);
+               $('#othertext').focus();
+           }else{
+            $('#otherserve').hide(500);
+            $('#othertext').val("");
+           }
+        });
 
-        $('#addserve').click(function () {
-            var slide=$('#adserveicon').attr("class");
-            if (slide=="fas fa-chevron-right") {
-                $('#services').show(500); 
-                $('#adserveicon').attr("class","fas fa-chevron-down");
-            }else{
-                $('#services').hide(500); 
-                $('#adserveicon').attr("class","fas fa-chevron-right");
-            }
+        // $('#addserve').click(function () {
+        //     var slide=$('#adserveicon').attr("class");
+        //     if (slide=="fas fa-chevron-right") {
+        //         $('#services').show(500); 
+        //         $('#adserveicon').attr("class","fas fa-chevron-down");
+        //     }else{
+        //         $('#services').hide(500); 
+        //         $('#adserveicon').attr("class","fas fa-chevron-right");
+        //     }
             
-        })
+        // });
         function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -184,8 +198,8 @@
         }
 
         function showPosition(position) {
-            $('#longitude').val(position.coords.latitude);
-            $('#latitude').val(position.coords.longitude);
+            $('#latitude').val(position.coords.latitude);
+            $('#longitude').val(position.coords.longitude);
         }
     </script>
 @endsection

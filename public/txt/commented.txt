@@ -1,0 +1,21 @@
+Home
+-------------------------------------------------------------------------------------------
+
+<!-- <div class="container">
+            <div class="row mb-5">
+                <div class="col-7 col-md-5 text-white">
+                    <h4 class="reduced">
+                        Need a tested artisan?
+                    </h4>
+                    <a href="/artisans"><button class="btn btn-primary pink-btn pr-4 pl-4">Get An Artisan</button></a>
+                </div>
+                
+            </div>
+            <div class="row text-right">
+                <div class="col-4 col-md-6"></div>
+                <div class="col-8 col-md-5 text-right text-white">
+                    <h4 class="reduced">Join our network of skilled artisans</h4>
+                    <a href="/artisan/signup"><button class="btn btn-primary pr-4 pl-4">Join Us</button></a>
+                </div>
+            </div> 
+        </div> -->

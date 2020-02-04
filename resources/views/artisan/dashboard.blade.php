@@ -92,7 +92,7 @@
                         <table class="table">
                           <tr>
                             <td>Service(s)</td>
-                            <td>{{$artisan->services}}</td>
+                            <td>@if($artisan->services != null){{$artisan->services}} @else pending acceptance.@endif</td>
                           </tr>
                           <tr>
                             <td>Description:</td>

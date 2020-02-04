@@ -41,9 +41,32 @@ Route::get('artisan/servicesedit','artisanController@getservicesedit');
 Route::view('/artisans','artisans');
 Route::get('/artisan/dashboard','artisanController@dashboard');
 Route::get('/randartisan','onesearchController@randomartisan');
+Route::get('/services','onesearchController@getservices');
 Route::get('/getartisans','onesearchController@artisans');
+Route::get('/getnearartisans/{lat}/{lon}','onesearchController@nearartisans');
 Route::get('/artisans/search/{stuff}','onesearchController@search');
+Route::post('/search','onesearchController@searchtoartisans');
+Route::get('/search/{stuff}','onesearchController@clicktoartisans');
+Route::get('/artisans/closesearch/{stuff}/{lat}/{lon}','onesearchController@closesearch');
 Route::get('/artisan/logout','artisanController@logout');
 Route::get('/artisan/editprofile','artisanController@getprofile');
 
-
+Route::get('/admin/login',function ()
+{
+    if (session()->exists('admin')) {
+        return redirect('/admin/dashboard');
+    }else {
+        return view('admin/login');
+    }
+});
+Route::post('admin/login','adminController@login');
+Route::get('admin/dashboard','adminController@dashboard');
+Route::get('admin',function ()
+{
+    return redirect('admin/dashboard');
+});
+Route::get('/admin/disable/{id}','adminController@disable');
+Route::get('/admin/enable/{id}','adminController@enable');
+Route::get('/admin/approve/{id}','admincontroller@approve');
+Route::get('/admin/disapprove/{id}','admincontroller@disapprove');
+Route::get('/admin/profile/{id}','admincontroller@artisan');
