@@ -23,9 +23,14 @@
 	padding: 0% !important;
 	font-size: medium;
 }
+.zero{
+	margin: 0 !important;
+	padding: 0 !important;
+}
 .servecard{
 	background-color: rgba(29, 38, 113, 0.8);
-	box-shadow: 1px 1px 6px;
+	/* box-shadow: 1px 1px 6px; */
+	border-top: 1px solid white;
 	color: #fff;
 }
 
@@ -36,16 +41,15 @@
 }
 .servicet{
 	background-color: #fff;
-	min-height: 40px ;
-	padding: 10%;
-	padding-bottom: 1%;
-	margin-bottom: 0;
+	
 }
-.sug{
-	padding-top: 20px !important;
-} 
+
 .invisible{
 	display: none;
+}
+.compname{
+	height: 4.5rem;
+	white-space: normal !important;
 }
 .shad2{
 	box-shadow: 1px 1px 6px;
@@ -166,6 +170,28 @@ body {
 	background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("../img/barber3.jpg")  0 0 fixed no-repeat center; /* The least supported option. */
 	
 }
+#servetarg{
+	border-radius: 1%;
+	background-color: rgba(29, 38, 113, 0.8);
+	min-height: 50px;
+
+}
+.marg5{
+	margin-left: 5%;
+}
+.ninety{
+	width: 90%;
+}
+@media only screen and (max-width: 760px) {
+	.home-card-img{
+		width: 31vw !important;
+		height: 31vw !important;
+		border-radius: 50%;
+		margin: 5% 2%;
+	}
+	
+}
+
 
 a.nav-link{
 	font-weight: bolder;
@@ -198,7 +224,8 @@ html, body {
 }
 .artpage-card{
 	font-size: xx-small;
-	background-color: #e6e6e6 !important;
+	color: white;
+	background-color: rgba(29, 38, 113,0.8) !important;
 }
 .arthead{
 	font-size: 1.8em;
@@ -219,8 +246,8 @@ html, body {
     font-family: Open sans;
 }
 .art-card{
-	border: 1px solid #C33764 !important;
-	box-shadow: 5px 4px 20px #ccc;
+	color: white;
+	background-color: rgba(29, 38, 113,0.8) !important;
 }
 .bmarg{
 	margin-top: 20% ;
@@ -248,7 +275,12 @@ html, body {
 	float: right;
 	height: 100%;
 }
-
+.profimg{
+	width: 37.5vw;
+	height: 37.5vw;
+	border-radius: 50%;
+	border: 3px solid turquoise;
+}
 .card-body .rotate i {
 	color: rgba(20, 20, 20, 0.15);
 	position: absolute;
@@ -264,10 +296,10 @@ html, body {
 	transform: rotate(-44deg);
 }
  
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 760px) {
 	  .artpage-card{
 		  font-size: medium;
-		  background-color: #e6e6e6 !important;
+		  
 	  }
 	  
 	
@@ -281,7 +313,8 @@ html, body {
 		border-right:1px solid white;
 	}
 	.profimg{
-		width: 100%;
+		width: 12.3vw;
+		height: 12.3vw;
 		border-radius: 50%;
 		border: 3px solid turquoise;
 	}
@@ -355,13 +388,15 @@ html, body {
   }
 
   .infoside{
-	  padding: 5% 2% !important;
+	  padding:  2% !important;
   }
   .home-card-img{
-	  width: 90%;
-	  border-radius: 50%;
-	  margin: 10% 2%;
-  }
+	width: 7.73vw;
+	height: 7.73vw;
+	border-radius: 50%;
+	margin: 5% 2%;
+}
+  
   .imgcover{
 	border-right: 1px solid #f2f2f2;
 	padding: 0px !important;

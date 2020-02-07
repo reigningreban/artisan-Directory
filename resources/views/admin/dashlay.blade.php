@@ -14,13 +14,13 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto mr-5" style="font-size:small !important;">
                 <li class="nav-item">
-                    <a class="nav-link @yield('homeA')" href="#">Home</a>
+                    <a class="nav-link @yield('homeA')" href="/admin/dashboard#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @yield('artA')" href="#artisans">Artisans</a>
+                    <a class="nav-link @yield('artA')" href="/admin/dashboard#artisans">Artisans</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#services">services</a>
+                    <a class="nav-link" href="/admin/dashboard#services">Services</a>
                 </li> 
                 <li class="nav-item">
                     <a class="nav-link" href="#suggested">Suggested</a>

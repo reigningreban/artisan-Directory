@@ -37,15 +37,52 @@
 
     <script>
         $(document).ready(function () {
-            // setTimeout(function() {
-            //     searcher();
-            // }, 1000);
-            
+            $("[data-toggle=popover]")
+                    .popover({ html: true});
+                    
+
+            $("body")
+                        .on("focus","[data-toggle=popover]", function () {
+                            $(this).popover("show");
+                        }).on("focusout","[data-toggle=popover]", function () {
+                            var _this = this;
+                            if (!$(".popover:hover").length) {
+                                $(this).popover("hide");
+                            }
+                            else {
+                                $('.popover').mouseleave(function() {
+                                    $(_this).popover("hide");
+                                    $(this).off('mouseleave');
+                                });
+                            }
+                        });
+            // $("[data-toggle=popover]").popover({html:true})
+            //         $('body').popover({
+            //             placement: 'bottom',
+            //             container: 'body',
+            //             html: true,
+            //             selector: '[data-toggle=popover]',
+                    // }).on("focus", function () {
+                    //                 $(this).popover("show");
+                    //             }).on("focusout", function () {
+                    //                 var _this = this;
+                    //                 if (!$(".popover:hover").length) {
+                    //                     $(this).popover("hide");
+                    //                 }
+                    //                 else {
+                    //                     $('.popover').mouseleave(function() {
+                    //                         $(_this).popover("hide");
+                    //                         $(this).off('mouseleave');
+                    //                     });
+                    //                 }
+                    //             });        
+                            
             $('html,body').animate({ scrollTop: 0 }, 'slow');
             $(document).on("keydown", "form", function(event) { 
                 return event.key != "Enter";
             });
             getartisans();
+            
             if($(window).width() < 800) {
                 $('#nopad').addClass('nopad');
                 
@@ -63,26 +100,45 @@
                         return $(this).width();
                     });
                 });
-            });
-
-            $("#search").keyup(function(){
-                searcher();
-            });
-            $('#nearby').click(function () {
-                var search=$('#search').val();
-                if ($('#nearby').attr('class')=="btn pink-btn inactive") {
-                    $('#nearicon').attr('class','fas fa-circle-notch fa-spin');
-                        getLocation();                    
-                }else{
-                    getartisans();
-                    $('#nearby').addClass('inactive');
-                    
-                }
-               
 
                 
             });
+
+            $("#search").keyup(function(){
+                var text=$("#search").val();
+                if (text=="") {
+                    if ($('#nearby').attr('class')=="btn pink-btn inactive") {
+                        getartisans();
+                    }else{
+                        getLocation();
+                    }
+                }else{
+                    searcher();
+                }
+                
+            });
+            
+            $('#nearby').click(function () {
+                if ($('#nearby').attr('class')=="btn pink-btn inactive") {
+                    $('#nearicon').attr('class','fas fa-circle-notch fa-spin');
+                        getLocation();
+
+                }else{
+                    $('#nearby').attr('class',"btn pink-btn inactive");
+                    getartisans();
+                }
+             
+            });
         });
+        
+        
+        
+        
+        
+
+        
+
+        //Functions------------------------------------------
         function getartisans() {
             $.get('/getartisans', function(data, status){
                 let myresult = ("Data: " + data + "\nStatus: " + status);
@@ -90,59 +146,15 @@
                 $('.fixedimg').height(function () {
                         return $(this).width();
                     });
-                searcher();
+                
             });
-        }
-        function searcher() {
-            var cat=$("#search").val();
-                if (cat!="") {
-                    var link;
-                    if ($('#nearby').attr('class')=="btn pink-btn inactive") {
-                        link="/artisans/search/";
-                        link+=cat;
-                        }else{
-                            var lat=$('#latitude').val();
-                            var lon=$('#longitude').val();
-                            link="/artisans/closesearch/";
-                            link+=cat+'/'+lat+'/'+lon;
-                            
-                        }
-                    
-                    $.get(link, function(data, status){
-                        let myresult = ("Data: " + data + "\nStatus: " + status);
-                        document.getElementById('art').innerHTML =data;
-                        $('.fixedimg').height(function () {
-                        return $(this).width();
-                    });
-                    });
-                    
-                }else{
-                    if ($('#nearby').attr('class')=="btn pink-btn inactive") {
-                        getartisans();
-                    }else{
-                        getLocation();
-                    }
-                    
+            var text=$("#search").val();
+                if (text!="") {
+                    searcher();
                 }
-        }
-        function closeartisans() {            
-            var lat=$('#latitude').val();
-            var lon=$('#longitude').val();
-            var link='/getnearartisans/'+lat+'/'+lon;
-            $.get(link, function(data, status){
-            let myresult = ("Data: " + data + "\nStatus: " + status);
-            document.getElementById('art').innerHTML =data;
-            $('.fixedimg').height(function () {
-                    return $(this).width();
-                });
-            $('#nearby').removeClass('inactive');
-            $('#nearicon').attr('class','fas fa-map-marker-alt');
-            
-            searcher();
-        });
-           
-            
-        }
+        }     
+
+
         function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -151,11 +163,65 @@
         }
         }
 
+
         function showPosition(position) {
             
             $('#latitude').val(position.coords.latitude);
             $('#longitude').val(position.coords.longitude);
             closeartisans();
-        }        
+        }   
+
+
+
+        function closeartisans() {            
+            var lat=$('#latitude').val();
+            var lon=$('#longitude').val();
+            var link='/getnearartisans/'+lat+'/'+lon;
+            $('#nearby').removeClass('inactive');
+            $('#nearicon').attr('class','fas fa-map-marker-alt');
+            $.get(link, function(data, status){
+            let myresult = ("Data: " + data + "\nStatus: " + status);
+            document.getElementById('art').innerHTML =data;
+            $('.fixedimg').height(function () {
+                    return $(this).width();
+                });
+            
+             
+        });
+        
+        var text=$("#search").val();
+        if (text!="") {
+                    setTimeout(searcher(),2000);
+                }
+        }
+
+        var popOverSettings= function () {
+            
+                 
+            }
+        function searcher() {
+            var cat=$("#search").val();
+            var link;
+            if ($('#nearby').attr('class')=="btn pink-btn inactive") {
+                link="/artisans/search/";
+                link+=cat;
+                }else{
+                    var lat=$('#latitude').val();
+                    var lon=$('#longitude').val();
+                    link="/artisans/closesearch/";
+                    link+=cat+'/'+lat+'/'+lon;
+                    
+                }
+            
+            $.get(link, function(data, status){
+                let myresult = ("Data: " + data + "\nStatus: " + status);
+                document.getElementById('art').innerHTML =data;
+                $('.fixedimg').height(function () {
+                return $(this).width();
+            });
+            });
+                    
+                
+        }
     </script>
 @endsection

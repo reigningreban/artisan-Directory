@@ -225,7 +225,8 @@ class artisanController extends Controller
                 'address'=>'required',
                 'state'=>'required',
                 'city'=>'required',
-                'services'=>'required'
+                'services'=>'required_without:others',
+                'others'=>'',
             ]);
 
             $firstname=request('firstname');
@@ -269,6 +270,14 @@ class artisanController extends Controller
                     ->whereRaw('artisan_id=? and service_id=?',[$artisan->ID,$job])
                     ->delete();
                 }
+            }
+            if(request('others')!=null){
+                $others=request('others');
+                DB::table('suggested_services')
+                ->insert([
+                    'service'=>$others,
+                    'artisan_id'=>$id
+                ]);
             }
             
 
@@ -414,6 +423,15 @@ class artisanController extends Controller
                 }
                 
             }
+            $data.="
+            <div class='col-md-4 col-6'>
+                <div class='form-check'>
+                    <label class='form-check-label'>
+                        <input type='checkbox' name='' class='form-check-input' id='othercheck'>others
+                    </label>
+                </div>
+            </div>
+        ";
             $data.="</div>";
             $data.="<div class='text-center'>Check the box(es) that best describe your business</div>";
             return $data;

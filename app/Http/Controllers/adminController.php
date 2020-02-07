@@ -198,7 +198,9 @@ class adminController extends Controller
             ->where('artisans.id',$id)
             ->first();
 
-            return view('admin/artisanprofile');
+            return view('admin/artisanprofile',[
+                'artisan'=>$artisan,
+            ]);
         }
     }
 }

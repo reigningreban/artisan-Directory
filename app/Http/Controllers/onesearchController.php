@@ -28,7 +28,7 @@ class onesearchController extends Controller
             <div class='col-12 col-md-4 '>
                     <div class='row'>
                         <div class='col-md-11 col-12 mb-4 art-card card'>
-                            <div class='row align-items-center'>
+                            <div class='row'>
                                 <div class='imgcover text-center col-5'>";
                                     if(null!=$artisan->displaypicture) {
                                         $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
@@ -36,13 +36,17 @@ class onesearchController extends Controller
                                      else {
                                         $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                                      }
-                                $result.="  </div>
-                                <div class='col-7 infoside text-left'>
-                                    <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
-                                    <p class='infopar'>$artisan->services</p>
+                                $result.="  
+                                    <div class='mb-1'>
+                                    <a  href='#' data-toggle='popover' title='Address' data-content='$artisan->address' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
+                                    <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
+                                    </div>
+                                </div>
+                                <div class='col-7 infoside text-left align-items-center'>
+                                    <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
                                     <p class='infopar'>$artisan->city, $artisan->state state.</p>
-                                    <p class='infopar address'><i class='fas fa-map-marker-alt'></i> $artisan->address</p>
-                                    <p class='infopar'>Tel: <a href='tel:$artisan->phone_no'>$artisan->phone_no</a></p>
+                                    <p class='infopar'>$artisan->services</p>
+                                    <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
                                 </div>
                             </div>
                         </div>
@@ -76,23 +80,27 @@ class onesearchController extends Controller
             <div class='col-12 col-md-3 '>
                     <div class='row pr-4 pl-4'>
                         <div class='col-12 mb-4  card artpage-card'>
-                            <div class='row align-items-center'>
-                            <div class='imgcover text-center col-5'>";
+                        <div class='row'>
+                        <div class='imgcover text-center col-5'>";
                             if(null!=$artisan->displaypicture) {
                                 $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
                             }
                              else {
                                 $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                              }
-                        $result.="  </div>
-                                <div class='col-7 infoside text-left'>
-                                    <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
-                                    <p class='infopar'>$artisan->services</p>
-                                    <p class='infopar'>$artisan->city, $artisan->state state.</p>
-                                    <p class='infopar address'><i class='fas fa-map-marker-alt'></i> $artisan->address</p>
-                                    <p class='infopar'>Tel: <a href='tel:$artisan->phone_no'>$artisan->phone_no</a></p>
-                                </div>
+                        $result.="  
+                            <div class='mb-1'>
+                            <a  href='#' data-toggle='popover' title='Address' data-content='$artisan->address' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
+                            <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
                             </div>
+                        </div>
+                        <div class='col-7 infoside text-left align-items-center'>
+                            <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                            <p class='infopar'>$artisan->city, $artisan->state state.</p>
+                            <p class='infopar'>$artisan->services</p>
+                            <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
+                        </div>
+                    </div>
                         </div>
                         
                     </div>
@@ -159,31 +167,34 @@ class onesearchController extends Controller
             <div class='col-12 col-md-3 '>
                     <div class='row pr-4 pl-4'>
                         <div class='col-12 mb-4  card artpage-card'>
-                            <div class='row align-items-center'>
-                            <div class='imgcover text-center col-5'>";
-                            if(null!=$artisan->displaypicture) {
-                                $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
-                            }
-                             else {
-                                $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
-                             }
-                        $result.="  </div>
-                                <div class='col-7 infoside text-left'>
-                                    <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
-                                    <p class='infopar'>$artisan->services</p>
-                                    <p class='infopar'>$artisan->city, $artisan->state state.</p>
-                                    <p class='infopar address'><a target='_blank' href='https://www.google.com/maps/search/?api=1&query=$artisan->latitude,$artisan->longitude'><i class='fas fa-map-marker-alt'></i> $artisan->address</a></p>
-                                    <p class='infopar'>Tel: <a href='tel:$artisan->phone_no'>$artisan->phone_no</a></p>
-                                    <p class='infopar'>"; 
-                                        if(($artisan->distance)<1){
-                                            $result.="less than 1KM away";
-                                        }else{
-                                            $result.=round($artisan->distance,2)."KM away";
-                                        } 
+                        <div class='row'>
+                        <div class='imgcover text-center col-5'>";
+                        if(null!=$artisan->displaypicture) {
+                            $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                        }
+                         else {
+                            $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
+                         }
+                    $result.="  
+                    <div class='mb-1'>
+                            <a  href='#' data-toggle='popover' title='Address' data-content='<a target=&quot;_blank&quot; href=&quot;https://www.google.com/maps/search/?api=1&query=$artisan->latitude,$artisan->longitude&quot;> $artisan->address</a>' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
+                            <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
+                            </div></div>
+                            <div class='col-7 infoside text-left align-items-center'>
+                                <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                                <p class='infopar'>$artisan->city, $artisan->state state.</p>
+                                <p class='infopar'>$artisan->services</p>
+                                <p class='infopar'>"; 
+                                    if(($artisan->distance)<1){
+                                        $result.="less than 1KM away";
+                                    }else{
+                                        $result.=round($artisan->distance,2)."KM away";
+                                    } 
 
-                                   $result.= "</p>
-                                </div>
+                               $result.= "</p>
+                                <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
                             </div>
+                        </div>
                         </div>
                         
                     </div>
@@ -192,7 +203,7 @@ class onesearchController extends Controller
         }
         $result.="<div class='col-12 text-center col-md-12'>". $artisans->links()." </div>";
     }else {
-        $result.="<div class='errors'>No artisans nearby</div>";
+        $result.="<div class='col-12 errors text-center'>No artisans nearby</div>";
     }
         return $result;
     }
@@ -226,23 +237,27 @@ class onesearchController extends Controller
                 <div class='col-12 col-md-3 '>
                         <div class='row pr-4 pl-4'>
                             <div class='col-12 mb-4  card artpage-card'>
-                                <div class='row align-items-center'>
-                                <div class='imgcover text-center col-5'>";
+                            <div class='row'>
+                            <div class='imgcover text-center col-5'>";
                                 if(null!=$artisan->displaypicture) {
                                     $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
                                 }
                                  else {
                                     $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                                  }
-                            $result.="  </div>
-                                    <div class='col-7 infoside text-left'>
-                                        <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
-                                        <p class='infopar'>$artisan->services</p>
-                                        <p class='infopar'>$artisan->city, $artisan->state state.</p>
-                                        <p class='infopar address'><i class='fas fa-map-marker-alt'></i> $artisan->address</p>
-                                        <p class='infopar'>Tel: <a href='tel:$artisan->phone_no'>$artisan->phone_no</a></p>
-                                    </div>
+                            $result.="  
+                                <div class='mb-1'>
+                                <a  href='#' data-toggle='popover' title='Address' data-content='$artisan->address' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
+                                <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
                                 </div>
+                            </div>
+                            <div class='col-7 infoside text-left align-items-center'>
+                                <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                                <p class='infopar'>$artisan->city, $artisan->state state.</p>
+                                <p class='infopar'>$artisan->services</p>
+                                <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
+                            </div>
+                        </div>
                             </div>
                             
                         </div>
@@ -296,22 +311,24 @@ class onesearchController extends Controller
                 <div class='col-12 col-md-3 '>
                         <div class='row pr-4 pl-4'>
                             <div class='col-12 mb-4  card artpage-card'>
-                                <div class='row align-items-center'>
-                                <div class='imgcover text-center col-5'>";
-                                if(null!=$artisan->displaypicture) {
-                                    $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
-                                }
-                                 else {
-                                    $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
-                                 }
-                            $result.="  </div>
-                                    <div class='col-7 infoside text-left'>
-                                        <p class='infopar'>$artisan->companyname ($artisan->slog)</p>
-                                        <p class='infopar'>$artisan->services</p>
-                                        <p class='infopar'>$artisan->city, $artisan->state state.</p>
-                                        <p class='infopar address'><a target='_blank' href='https://www.google.com/maps/search/?api=1&query=$artisan->latitude,$artisan->longitude'><i class='fas fa-map-marker-alt'></i> $artisan->address</a></p>
-                                        <p class='infopar'>Tel: <a href='tel:$artisan->phone_no'>$artisan->phone_no</a></p>
-                                        <p class='infopar'>"; 
+                            <div class='row'>
+                            <div class='imgcover text-center col-5'>";
+                            if(null!=$artisan->displaypicture) {
+                                $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                            }
+                             else {
+                                $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
+                             }
+                        $result.="  
+                        <div class='mb-1'>
+                                <a  href='#' data-toggle='popover' title='Address' data-content='<a target=&quot;_blank&quot; href=&quot;https://www.google.com/maps/search/?api=1&query=$artisan->latitude,$artisan->longitude&quot;> $artisan->address</a>' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
+                                <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
+                                </div></div>
+                                <div class='col-7 infoside text-left align-items-center'>
+                                    <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                                    <p class='infopar'>$artisan->city, $artisan->state state.</p>
+                                    <p class='infopar'>$artisan->services</p>
+                                    <p class='infopar'>"; 
                                         if(($artisan->distance)<1){
                                             $result.="less than 1KM away";
                                         }else{
@@ -319,8 +336,9 @@ class onesearchController extends Controller
                                         } 
 
                                    $result.= "</p>
-                                    </div>
+                                    <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
                                 </div>
+                            </div>
                             </div>
                             
                         </div>
@@ -341,37 +359,40 @@ class onesearchController extends Controller
     public function getservices()
     {
         $services=DB::table('services')
+        ->limit(10)
         ->get();
         $result="";
         $i='l';
         $j='r';
         foreach ($services as $service ) {
             $result.="
-                <div class='col-md-12 col-12  ' >
-                    <div class='row'>
-                        <div class='col-md-12 col-12 nopad'>
-                            <a href='/search/$service->service'>
-                                <div class='servecard text-center py-1'>
-                                    <span class='servetext'>$service->service</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <a href='/search/$service->service' class='btn pink-btn text-center ninety my-2'>$service->service</a>  
             ";
-            if ($i=='l') {
-                $i="r";
-                $j='l';
-            }else {
-                $i='l';
-                $j='r';
-            }
+            // if ($i=='l') {
+            //     $i="r";
+            //     $j='l';
+            // }else {
+            //     $i='l';
+            //     $j='r';
+            // }
         }
+        $result.="<a href='/services' class='btn btn-light text-center my-2'>More</a>";
 
         return $result;
 
     }
 
+    //services
+    public function services()
+    {
+        $services=DB::table('services')
+        ->get();
+        
+        return view('services',[
+            'services'=>$services,
+        ]);
+
+    }
 
     public function searchtoartisans()
     {
@@ -387,5 +408,24 @@ class onesearchController extends Controller
         
         $search=$stuff;
         return redirect('artisans')->with('search',$search);
+    }
+
+    public function artprofile($slug)
+    {
+        
+        $artisan=DB::table('artisans')
+        ->leftJoin('offered_by','artisans.id','=','offered_by.artisan_id','left outer')
+        ->leftjoin('services','services.id','=','offered_by.service_id')
+        ->join('cities','cities.id','=','artisans.city_id')
+        ->join('states','states.id','=','cities.state_id')
+        ->select('artisans.id as ID','artisans.*','states.*','cities.*', DB::raw("group_concat(DISTINCT services.service ORDER BY services.service DESC SEPARATOR ', ') as services"))
+        ->groupBy('artisans.id')
+        ->where('artisans.slog',$slug)
+        ->first();
+
+        return view('/artisanprofile',[
+            'artisan'=>$artisan,
+        ]);
+       
     }
 }

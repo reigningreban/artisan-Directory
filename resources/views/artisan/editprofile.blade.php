@@ -114,7 +114,11 @@
                             <div class="input-group" id="services">
                                 
                             </div>
+                            <div class="input-group" id="otherserve">
+                                <input type="text" name="others" placeholder="suggest a new service..." id="othertext">
+                            </div>
                             <div class="errors">{{$errors->first('services')}} </div>
+                            <div class="errors">{{$errors->first('others')}} </div>
 
                             <div class="entry text-center mt-5 mb-5">
                                 <button class="btn btn-primary btn-block purple-btn" onclick="this.innerHTML='Loading...'"><i class="fas fa-user-edit"></i> Update</button>
@@ -139,7 +143,7 @@
             
         <script type="text/javascript">
         $(document).ready(function () {
-            
+            $('#otherserve').hide();
             $.get('/artisan/statesedit', function(data, status){
                 let myresult = ("Data: " + data + "\nStatus: " + status);
                 document.getElementById('state').innerHTML =data;
@@ -162,7 +166,15 @@
                 document.getElementById('city').innerHTML =data;
             });
         });
-
+        $("body").on("change","#othercheck", function(){
+           if(this.checked){
+               $('#otherserve').show(400);
+               $('#othertext').focus();
+           }else{
+            $('#otherserve').hide(400);
+            $('#othertext').val("");
+           }
+        });
         
               
         
