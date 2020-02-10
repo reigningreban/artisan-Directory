@@ -24,6 +24,9 @@
                 <li class="nav-item">
                     <a class="nav-link @yield('artA')" href="/artisans">Artisans</a>
                 </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link @yield('serva')" href="/services">Services</a>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link rborder" href="/artisan/signup">Signup</a>
                 </li> 
@@ -56,7 +59,7 @@
 
     @yield('body')
        <footer class="footer myfooter text-center text-white py-3" style="font-size:small !important;">
-            copyright©O'Bounce Tech 2020
+            ©O'Bounce Technologies 2020
        </footer>
     
 @endsection

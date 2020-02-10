@@ -126,7 +126,7 @@ class artisanController extends Controller
             'firstname'=>'required',
             'lastname'=>'required_with:firstname',
             'bizname'=>'required',
-            'slog'=>'required|unique:artisans,slog',
+            'slog'=>'required',
             'email'=>'required|email|unique:artisans,email',
             'phone'=>'required|numeric|digits:11|unique:artisans,phone_no',
             'password'=>'required',
@@ -151,60 +151,82 @@ class artisanController extends Controller
         $address=request('address');
         $city=request('city');
         $services=request('services');
-        $slog=request('slog');
+        $slog=$this->seoUrl(request('slog')) ;
         
+        $unique=DB::table('artisans')
+        ->where('slog',$slog)
+        ->doesntExist();
         
 
-        $artisan_id= DB::table('artisans')
-        ->insertGetId([
-            'companyname'=>$bizname,
-            'slog'=>$slog,
-            'firstname'=>$firstname,
-            'lastname'=>$lastname,
-            'email'=>$email,
-            'password'=>$password,
-            'address'=>$address,
-            'city_id'=>$city,
-            'registered'=>$time,
-            'phone_no'=>$phone
-        ]);
+        if ($unique) {
         
-        if ((request('longitude')!=null)&&(request('latitude')!=null)) {
-            $longitude=request('longitude');
-            $latitude=request('latitude');
-            DB::table('artisans')
-            ->where('id',$artisan_id)
-            ->update([
-                'longitude'=>$longitude,
-                'latitude'=>$latitude
+            $artisan_id= DB::table('artisans')
+            ->insertGetId([
+                'companyname'=>$bizname,
+                'slog'=>$slog,
+                'firstname'=>$firstname,
+                'lastname'=>$lastname,
+                'email'=>$email,
+                'password'=>$password,
+                'address'=>$address,
+                'city_id'=>$city,
+                'registered'=>$time,
+                'phone_no'=>$phone
             ]);
+            
+            if ((request('longitude')!=null)&&(request('latitude')!=null)) {
+                $longitude=request('longitude');
+                $latitude=request('latitude');
+                DB::table('artisans')
+                ->where('id',$artisan_id)
+                ->update([
+                    'longitude'=>$longitude,
+                    'latitude'=>$latitude
+                ]);
+            }
+            if(request('others')!=null){
+                $others=request('others');
+                DB::table('suggested_services')
+                ->insert([
+                    'service'=>$others,
+                    'artisan_id'=>$artisan_id
+                ]);
+            }
+            if($services!=null){
+            foreach ($services as $service ) {
+                DB::table('offered_by')
+                ->insert([
+                    'artisan_id'=>$artisan_id,
+                    'service_id'=>$service
+                ]);
+            }
         }
-        if(request('others')!=null){
-            $others=request('others');
-            DB::table('suggested_services')
-            ->insert([
-                'service'=>$others,
-                'artisan_id'=>$artisan_id
-            ]);
-        }
-        if($services!=null){
-        foreach ($services as $service ) {
-            DB::table('offered_by')
-            ->insert([
-                'artisan_id'=>$artisan_id,
-                'service_id'=>$service
-            ]);
+
+            
+            session()->flush();
+            session()->put('artisan',$artisan_id);
+
+            return redirect('artisan/dashboard');
+        }else {
+            return redirect()->back()->withInput()->with('fail','This slog has been taken');
         }
     }
 
-        
-        session()->flush();
-        session()->put('artisan',$artisan_id);
 
-        return redirect('artisan/dashboard');
+
+    //seo strip slug
+
+    public function seoUrl($string) {
+        //Lower case everything
+        $string = strtolower($string);
+        //Make alphanumeric (removes all other characters)
+        $string = preg_replace("/[^a-z0-9_\s-]/", "", $string);
+        //Clean up multiple dashes or whitespaces
+        $string = preg_replace("/[\s-]+/", " ", $string);
+        //Convert whitespaces and underscore to dash
+        $string = preg_replace("/[\s_]/", "-", $string);
+        return $string;
     }
-
-
 
     //function to edit profile
     public function editprofile()
@@ -343,13 +365,8 @@ class artisanController extends Controller
     //my test function
     public function tester()
     {
-        $lat=7.348720;
-        $lon=3.879290;
-        $person=DB::table('artisans')
-        ->where('id',107)
-        ->first();
-        $distance=$this->distance($lat,$lon,7.3623007000000005,3.8562822,"K");
-        echo($distance);
+        
+        
         
         
 

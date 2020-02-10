@@ -46,7 +46,7 @@ class onesearchController extends Controller
                                     <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
                                     <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                     <p class='infopar'>$artisan->services</p>
-                                    <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
+                                    <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@ class onesearchController extends Controller
                             <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
                             <p class='infopar'>$artisan->city, $artisan->state state.</p>
                             <p class='infopar'>$artisan->services</p>
-                            <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
+                            <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
                         </div>
                     </div>
                         </div>
@@ -109,6 +109,19 @@ class onesearchController extends Controller
         }
         $result.="<div class='col-12 text-center col-md-12'>". $artisans->links()." </div>";
         return $result;
+    }
+    //seo strip slug
+
+    public function seoUrl($string) {
+        //Lower case everything
+        $string = strtolower($string);
+        //Make alphanumeric (removes all other characters)
+        $string = preg_replace("/[^a-z0-9_\s-]/", "", $string);
+        //Clean up multiple dashes or whitespaces
+        $string = preg_replace("/[\s-]+/", " ", $string);
+        //Convert whitespaces and underscore to dash
+        $string = preg_replace("/[\s_]/", "-", $string);
+        return $string;
     }
 
     //calc distance
@@ -192,7 +205,7 @@ class onesearchController extends Controller
                                     } 
 
                                $result.= "</p>
-                                <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
+                                <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
                             </div>
                         </div>
                         </div>
@@ -255,7 +268,7 @@ class onesearchController extends Controller
                                 <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
                                 <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                 <p class='infopar'>$artisan->services</p>
-                                <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
+                                <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
                             </div>
                         </div>
                             </div>
@@ -336,7 +349,7 @@ class onesearchController extends Controller
                                         } 
 
                                    $result.= "</p>
-                                    <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt'></i></a></p>
+                                    <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
                                 </div>
                             </div>
                             </div>

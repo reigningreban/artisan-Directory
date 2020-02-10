@@ -58,7 +58,10 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="slog" name="slog" value="@if(null!==old('slog')) {{old('slog')}} @else {{$artisan->slog}} @endif" placeholder="a short unique name for your company...">
                                 </div>
-                                <div class="errors">{{$errors->first('slog')}} </div>
+                                <div class="errors">
+                                    {{$errors->first('slog')}} 
+                                    @if(session()->exists('fail')) {{session()->get('fail')}} @endif
+                                </div>
                             </div>
 
                             <div class="entry">

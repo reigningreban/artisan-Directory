@@ -16,6 +16,15 @@
                           <div class="col-md-6 col-6">
                             <div class="imgcont text-center mb-3">
                                 <img src="@if(null!=$artisan->displaypicture) {{asset($artisan->displaypicture)}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profimg fixedimg" id="profimg">
+                                <p class="text-center">
+                                  <h6 class="font-weight-bolder">{{$artisan->firstname}} {{$artisan->lastname}}</h6>
+                                </p>
+                                
+                                <p class="text-left mt-3 font-weight-bold">
+                                  {{$artisan->companyname}}<br>
+                                  <i class="fa fa-map-marker-alt"></i>
+                                <a target='_blank' href='https://www.google.com/maps/search/?api=1&query={{$artisan->latitude}},{{$artisan->longitude}}'>{{$artisan->address}}, {{$artisan->city}}, {{$artisan->state}} state.</a>
+                                </p>
                             </div>
                           </div>
                           <div class="col-md-12">
@@ -23,16 +32,7 @@
                   <div class="col-md-12 col-12" id="passch">
                       <div class="table-responsive">
                         <table class="table">
-                          <tr>
-                            <td>Service(s)</td>
-                            <td>@if($artisan->services != null){{$artisan->services}} @else pending acceptance.@endif</td>
-                          </tr>
-                          <tr>
-                            <td>Description:</td>
-                            <td style="word-wrap: normal;word-break: break-all;">
-                                @if($artisan->description!=null){{$artisan->description}} @else <span class="text-danger">No description added</span> @endif 
-                            </td>
-                          </tr>
+                          
                         </table>
                       </div>
                     </div>
@@ -46,22 +46,22 @@
                     <div class="table-responsive">
                       <table id="mytab" class="table ">
                         <tbody>
-                          <tr>
-                            <td>Name:</td>
-                            <td>{{$artisan->firstname}} {{$artisan->lastname}}</td>
+                        <tr>
+                            <td>Service(s)</td>
+                            <td>@if($artisan->services != null){{$artisan->services}} @else pending acceptance.@endif</td>
                           </tr>
                           <tr>
-                            <td>Company:</td>
-                            <td>{{$artisan->companyname}}</td>
+                            <td>Description:</td>
+                            <td style="word-wrap: normal;word-break: break-all;">
+                                @if($artisan->description!=null){{$artisan->description}} @else <span class="text-danger">No description added</span> @endif 
+                            </td>
                           </tr>
+                          
                           <tr>
                             <td>Slog:</td>
                             <td>{{$artisan->slog}}</td>
                           </tr>
-                          <tr>
-                            <td>Address:</td>
-                            <td><a target='_blank' href='https://www.google.com/maps/search/?api=1&query={{$artisan->latitude}},{{$artisan->longitude}}'>{{$artisan->address}}, {{$artisan->city}}, {{$artisan->state}} state.</a></td>
-                          </tr>
+              
                           <tr>
                             <td>Email:</td>
                             <td><a href="mailto:{{$artisan->email}}">{{$artisan->email}}</a></td>

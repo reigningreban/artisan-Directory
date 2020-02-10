@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','signup')
+@section('title','1search - Signup')
 @section('pstyle')
 <style>
     
@@ -53,7 +53,10 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="slog" name="slog" value="{{old('slog')}}" placeholder="a short unique name for your company...">
                                 </div>
-                                <div class="errors">{{$errors->first('slog')}} </div>
+                                <div class="errors">
+                                    {{$errors->first('slog')}} 
+                                    @if(session()->exists('fail')) {{session()->get('fail')}} @endif
+                                </div>
                             </div>
 
                             <div class="entry">

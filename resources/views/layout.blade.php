@@ -40,7 +40,7 @@
     <!-- <script src="{{asset('js/myscript.js')}}"></script> -->
 
 <head>
-	<title>@yield('title','1search')</title>
+	<title>@yield('title','1search - One stop search for artisans')</title>
 </head>
 <body>
     <div class="se-pre-con"></div>
