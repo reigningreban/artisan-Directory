@@ -117,7 +117,7 @@ Route::post('/agent/picupload','agentController@picupload');
 Route::get('/agent/editprofile','agentController@showmyprofile');
 Route::post('/agent/editprofile','agentController@editmyprofile');
 
-Route::view('/mytest','emails/Artisansignup');
+Route::view('/mytest','emails/Agentapproved');
 // Route::get('/mytest','adminController@test');
 
 

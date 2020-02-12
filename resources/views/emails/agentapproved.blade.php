@@ -22,9 +22,12 @@
                                         <span class="font-weight-bold" style="color:#4a2d43;"><img src="{{asset('img/1app1.png')}}" alt="" class="oneappimg">SEARCH</span>
                                     </a>
                                 </h2>
-                                <h4 style="color: #DAC2C2FC;" class="mb-3">Hi {{$agent->firstname ?? ''}},</h4>
+                                <h5 style="color: #9e6161;" class="mb-3">Hi {{$agent->firstname ?? ''}},</h5>
                                 <p>Congratulations, you have been approved as an agent on 1search.</p>
                                 <p>You can now login to your account using your email and password.</p>
+                                
+                                <div class="text-center"><p class="text-left">Click the button below to login</p><a href="/agent/login"><button class="purple-btn btn">Login to 1Search</button></a></div>
+
                                 @include('emails/foot')
                             </div>
                         </div>
