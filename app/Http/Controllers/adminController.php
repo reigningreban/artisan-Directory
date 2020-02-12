@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\ArtisanSignupEmail;
+use App\Mail\AgentApprovedEmail;
+use App\Mail\AgentDisapprovedEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -223,7 +225,7 @@ class adminController extends Controller
                 'validated'=>1
             ]);
 
-            
+            $this->appmail($id);
 
             return redirect()->back();
         }
@@ -254,6 +256,8 @@ class adminController extends Controller
         if (!$logged) {
             return redirect('qzwf/login');
         }else {
+
+            $this->disappmail($id);
             DB::table('agents')
             ->where('id',$id)
             ->delete();
@@ -322,6 +326,35 @@ class adminController extends Controller
     $data = ['artisan' => $artisan];
 
     \Mail::to('francisokewale@gmail.com')->send(new ArtisanSignupEmail($data));
+    }
+
+
+
+    public function appmail($id)
+    {
+
+        $agent=DB::table('agent')
+        ->where('id',$id)
+        ->first();
+        
+
+    $data = ['agent' => $agent];
+
+    \Mail::to($agent->email)->send(new AgentApprovedEmail($data));
+    }
+
+
+    public function disappmail($id)
+    {
+
+        $agent=DB::table('agent')
+        ->where('id',$id)
+        ->first();
+        
+
+    $data = ['agent' => $agent];
+
+    \Mail::to($agent->email)->send(new AgentDisapprovedEmail($data));
     }
 
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\AgentSignupEmail;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -66,6 +68,9 @@ class AgentController extends Controller
         return redirect()->back()->with('success','Your application has been sent successfully. ');
 
     }
+
+
+
     public function regmail($id)
     {
 
@@ -78,6 +83,12 @@ class AgentController extends Controller
 
     \Mail::to($agent->email)->send(new AgentSignupEmail($data));
     }
+
+
+
+   
+
+
 
 
     public function logout()
@@ -377,6 +388,35 @@ class AgentController extends Controller
     }
 
 
+    public function mystatesedit()
+    {
+        if ($this->checker()) {
+            $id=session()->get('agent');
+            $agent=DB::table('agents')
+            ->join('cities','cities.id','=','agents.city_id')
+            ->where('agents.id',$id)
+            ->select('agents.id as ID','agents.*','cities.*')
+            ->first();
+            $states=DB::table('states')
+            ->get();
+            $options="<option value=''>-select state-</option>";
+            foreach ($states as $state ) {
+                if ($state->id == $agent->state_id) {
+                    $options.="
+                        <option value='$state->id' selected>$state->state</option>
+                    ";
+                }else {
+                    $options.="
+                        <option value='$state->id'>$state->state</option>
+                    ";
+                }
+                
+            }
+            return $options;
+        }
+    }
+
+
 
     public function citiesedit($slog)
     {
@@ -403,6 +443,35 @@ class AgentController extends Controller
         
     }
 
+    public function mycitiesedit()
+    {
+        if ($this->checker()) {
+            $id=session()->get('agent');
+            $agent=DB::table('agents')
+            ->join('cities','cities.id','=','agents.city_id')
+            ->where('agents.id',$id)
+            ->select('agents.id as ID','agents.*','cities.*')
+            ->first();
+            $cities=DB::table('cities')
+            ->where('state_id',$agent->state_id)
+            ->get();
+            $options="<option value=''>-select city-</option>";
+            foreach ($cities as $city ) {
+                if ($city->id == $agent->city_id) {
+                    $options.="
+                        <option value='$city->id' selected>$city->city</option>
+                    ";
+                }else {
+                        $options.="
+                        <option value='$city->id'>$city->city</option>
+                    ";
+                }
+                
+            }
+            return $options;
+        }
+        
+    }
 
 
 
@@ -609,5 +678,58 @@ class AgentController extends Controller
 
             return redirect()->back()->with('success','Image has been successfully uploaded');
         }
+    }
+
+
+    public function showmyprofile()
+    {
+        if (!$this->checker()) {
+            return redirect('/agent/login');
+        }else {
+            $id=session()->get('agent');
+            $agent=DB::table('agents')
+            ->where('id',$id)
+            ->first();
+
+            return view('agent/editprofile',[
+                'agent'=>$agent,
+            ]);
+        }
+    }
+
+    public function editmyprofile()
+    {
+       if (!$this->checker()) {
+           return redirect('/agent/login'); 
+       }else {
+           $id=session()->get('agent');
+        $data=request()->validate([
+            'firstname'=>'required',
+            'lastname'=>'required_with:firstname',
+            'state'=>'required',
+            'city'=>'required',
+            'address'=>'required',
+            'phone'=>'required|numeric|digits:11|unique:agents,phone_no'.",$id",
+            
+        ]);
+
+        $firstname=request('firstname');
+        $lastname=request('lastname');
+        $phone=request('phone');
+        $address=request('address');
+        $city=request('city');
+
+        $id=DB::table('agents')
+        ->where('id',$id)
+        ->update([
+            'firstname'=>$firstname,
+            'lastname'=>$lastname,
+            'phone_no'=>$phone,
+            'address'=>$address,
+            'city_id'=>$city,
+        ]);
+        return redirect('/agent/dashboard')->with('success','Your profile has been successfully updated');
+
+       }
     }
 }

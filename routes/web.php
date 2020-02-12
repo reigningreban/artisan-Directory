@@ -110,8 +110,13 @@ Route::get('/agent/editartisan/{slog}','agentController@showartisan');
 Route::post('/agent/editartisan/{slog}','agentController@editartisan');
 Route::get('/agent/editartisan/{slog}/statesedit','agentController@statesedit');
 Route::get('/agent/editartisan/{slog}/citiesedit','agentController@citiesedit');
-Route::get('/agent/editartisan/{slog}/servicesedit','agentController@servicesedit');
+Route::get('/agent/editartisan/{slog}/statesedit','agentController@statesedit');
+Route::get('/agent/citiesedit','agentController@mycitiesedit');
+Route::get('/agent/statesedit','agentController@mystatesedit');
 Route::post('/agent/picupload','agentController@picupload');
+Route::get('/agent/editprofile','agentController@showmyprofile');
+Route::post('/agent/editprofile','agentController@editmyprofile');
+
 Route::view('/mytest','emails/Artisansignup');
 // Route::get('/mytest','adminController@test');
 

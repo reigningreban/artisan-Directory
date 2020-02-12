@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AgentApprovedEmail extends Mailable
+class AgentDisapprovedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,10 +21,10 @@ class AgentApprovedEmail extends Mailable
     public function build()
     {
         $address = 'hi@1appgo.com';
-        $subject = 'Approved';
+        $subject = 'Disapproved';
         $name = 'Opeyemi from 1search';
         
-        return $this->view('emails.agentapproved')
+        return $this->view('emails.agentdisapproved')
                     ->from($address, $name)
                     ->cc($address, $name)
                     ->bcc($address, $name)
