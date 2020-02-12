@@ -25,6 +25,10 @@ Route::get('/artisan/login',function ()
         return view('artisan/login');
     }
 });
+Route::get('artisan',function ()
+{
+    return redirect('artisan/dashboard');
+});
 Route::post('/artisan/login','artisanController@login');
 Route::post('artisan/signup','artisanController@signup');
 Route::post('/artisan/editprofile','artisanController@editprofile');
@@ -53,23 +57,63 @@ Route::get('/artisans/{slug}','onesearchController@artprofile');
 Route::get('/artisan/logout','artisanController@logout');
 Route::get('/artisan/editprofile','artisanController@getprofile');
 
-Route::get('/admin/login',function ()
+Route::get('/qzwf/login',function ()
 {
     if (session()->exists('admin')) {
-        return redirect('/admin/dashboard');
+        return redirect('/qzwf/dashboard');
     }else {
-        return view('admin/login');
+        return view('qzwf/login');
     }
 });
-Route::post('/admin/login','adminController@login');
-Route::get('/admin/logout','adminController@logout');
-Route::get('/admin/dashboard','adminController@dashboard');
-Route::get('admin',function ()
+Route::post('/qzwf/login','adminController@login');
+Route::get('/qzwf/logout','adminController@logout');
+Route::get('/qzwf/dashboard','adminController@dashboard');
+Route::get('qzwf',function ()
 {
-    return redirect('admin/dashboard');
+    return redirect('qzwf/dashboard');
 });
-Route::get('/admin/disable/{id}','adminController@disable');
-Route::get('/admin/enable/{id}','adminController@enable');
-Route::get('/admin/approve/{id}','admincontroller@approve');
-Route::get('/admin/disapprove/{id}','admincontroller@disapprove');
-Route::get('/admin/profile/{id}','admincontroller@artisan');
+Route::get('/qzwf/disable/{id}','adminController@disable');
+Route::get('/qzwf/enable/{id}','adminController@enable');
+
+Route::get('/qzwf/agentdisable/{id}','adminController@agentdisable');
+Route::get('/qzwf/agentenable/{id}','adminController@agentenable');
+Route::get('/qzwf/approve/{id}','admincontroller@approve');
+Route::get('/qzwf/disapprove/{id}','admincontroller@disapprove');
+Route::get('/qzwf/agentapprove/{id}','admincontroller@agentapprove');
+Route::get('/qzwf/agentdisapprove/{id}','admincontroller@agentdisapprove');
+Route::get('/qzwf/profile/{id}','admincontroller@artisan');
+Route::get('/qzwf/agentprofile/{id}','admincontroller@agent');
+
+
+Route::get('/agent/login',function ()
+{
+    if (session()->exists('agent')) {
+        return redirect('/agent/dashboard');
+    }else {
+        return view('agent/login');
+    }
+});
+Route::get('agent',function ()
+{
+    return redirect('agent/dashboard');
+});
+Route::view('/agent/apply','/agent/apply');
+Route::get('/agent/logout','agentController@logout');
+Route::post('/agent/apply','agentController@apply');
+Route::post('/agent/login','agentController@login');
+Route::get('/agent/dashboard','agentController@dashboard');
+Route::view('/agent/addartisan','/agent/addartisans');
+Route::post('/agent/addartisan','agentController@addartisan');
+Route::get('/agent/myartisans','agentController@myartisans');
+Route::get('/agent/myartisans/{slog}','agentController@artisanprofile');
+Route::get('/agent/editartisan/{slog}','agentController@showartisan');
+Route::post('/agent/editartisan/{slog}','agentController@editartisan');
+Route::get('/agent/editartisan/{slog}/statesedit','agentController@statesedit');
+Route::get('/agent/editartisan/{slog}/citiesedit','agentController@citiesedit');
+Route::get('/agent/editartisan/{slog}/servicesedit','agentController@servicesedit');
+Route::post('/agent/picupload','agentController@picupload');
+Route::view('/mytest','emails/Artisansignup');
+// Route::get('/mytest','adminController@test');
+
+
+

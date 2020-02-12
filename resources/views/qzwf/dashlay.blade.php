@@ -14,19 +14,19 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto mr-5" style="font-size:small !important;">
                 <li class="nav-item">
-                    <a class="nav-link @yield('homeA')" href="/admin/dashboard#">Home</a>
+                    <a class="nav-link @yield('homeA')" href="/qzwf/dashboard#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @yield('artA')" href="/admin/dashboard#artisans">Artisans</a>
+                    <a class="nav-link @yield('artA')" href="/qzwf/dashboard#artisans">Artisans</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/dashboard#services">Services</a>
+                    <a class="nav-link" href="/qzwf/dashboard#services">Services</a>
                 </li> 
                 <li class="nav-item">
                     <a class="nav-link" href="#suggested">Suggested</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/logout">Logout</a>
+                    <a class="nav-link" href="/qzwf/logout">Logout</a>
                 </li>
             </ul>
         </div>  
@@ -34,13 +34,13 @@
 
 @yield('body')
 <footer class="footer myfooter text-center text-white py-3" style="font-size:small !important;">
-    copyright©O'Bounce Tech 2020
+    ©O'Bounce Technologies 2020
 </footer>
 <script>
     $(document).ready(function() {
         $('.data').DataTable();
         $("body").on("click",".disable",function () {
-            var link='/admin/disable/';
+            var link='/qzwf/disable/';
             var id=$(this).attr('id');
             link+=id;
             $.get(link, function(data, status){
@@ -50,7 +50,7 @@
             $(this).html('Disabled');
         });
         $("body").on("click",".enable",function () {
-            var link='/admin/enable/';
+            var link='/qzwf/enable/';
             var id=$(this).attr('id');
             link+=id;
             $.get(link, function(data, status){
@@ -59,6 +59,37 @@
             $(this).attr('class','btn btn-success disable');
             $(this).html('Enabled');
         });
+
+
+
+
+        $("body").on("click",".agentdisable",function () {
+            var link='/qzwf/agentdisable/';
+            var id=$(this).attr('id');
+            link+=id;
+            $.get(link, function(data, status){
+                let myresult = ("Data: " + data + "\nStatus: " + status);
+            });
+            $(this).attr('class','btn btn-danger agentenable');
+            $(this).html('Disabled');
+        });
+        $("body").on("click",".agentenable",function () {
+            var link='/qzwf/agentenable/';
+            var id=$(this).attr('id');
+            link+=id;
+            $.get(link, function(data, status){
+                let myresult = ("Data: " + data + "\nStatus: " + status);
+            });
+            $(this).attr('class','btn btn-success agentdisable');
+            $(this).html('Enabled');
+        });
+
+
+
+
+
+
+
         if($(window).width() < 800) {
                 $('table').addClass('table-sm');
                 $('pushup').addClass('bmarg');

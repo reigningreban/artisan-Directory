@@ -29,21 +29,21 @@ class onesearchController extends Controller
                     <div class='row'>
                         <div class='col-md-11 col-12 mb-4 art-card card'>
                             <div class='row'>
-                                <div class='imgcover text-center col-5'>";
+                                <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                                     if(null!=$artisan->displaypicture) {
                                         $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
                                     }
                                      else {
                                         $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                                      }
-                                $result.="  
+                                $result.="  </a>
                                     <div class='mb-1'>
                                     <a  href='#' data-toggle='popover' title='Address' data-content='$artisan->address' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
                                     <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
                                     </div>
                                 </div>
                                 <div class='col-7 infoside text-left align-items-center'>
-                                    <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                                    <p class='infopar compname font-weight-bolder'>$artisan->companyname (<a href='/artisans/$artisan->slog'>$artisan->slog</a>)</p>
                                     <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                     <p class='infopar'>$artisan->services</p>
                                     <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
@@ -81,21 +81,21 @@ class onesearchController extends Controller
                     <div class='row pr-4 pl-4'>
                         <div class='col-12 mb-4  card artpage-card'>
                         <div class='row'>
-                        <div class='imgcover text-center col-5'>";
+                        <div class='imgcover text-center col-5'> <a href='/artisans/$artisan->slog'>";
                             if(null!=$artisan->displaypicture) {
                                 $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
                             }
                              else {
                                 $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                              }
-                        $result.="  
+                        $result.="  </a>
                             <div class='mb-1'>
                             <a  href='#' data-toggle='popover' title='Address' data-content='$artisan->address' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
                             <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
                             </div>
                         </div>
                         <div class='col-7 infoside text-left align-items-center'>
-                            <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                            <p class='infopar compname font-weight-bolder'>$artisan->companyname (<a href='/artisans/$artisan->slog'>$artisan->slog</a>)</p>
                             <p class='infopar'>$artisan->city, $artisan->state state.</p>
                             <p class='infopar'>$artisan->services</p>
                             <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
@@ -169,7 +169,7 @@ class onesearchController extends Controller
         
         // ->get();
         $count=$data->count();
-        $result="";
+        $result="<div class='col-12 col-md-12 text-muted text-center mb-4'>Showing nearby artisans (click nearby button again to show all artisans)</div>";
         if ($count>0) {
             
         
@@ -181,7 +181,7 @@ class onesearchController extends Controller
                     <div class='row pr-4 pl-4'>
                         <div class='col-12 mb-4  card artpage-card'>
                         <div class='row'>
-                        <div class='imgcover text-center col-5'>";
+                        <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                         if(null!=$artisan->displaypicture) {
                             $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
                         }
@@ -189,12 +189,12 @@ class onesearchController extends Controller
                             $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                          }
                     $result.="  
-                    <div class='mb-1'>
+                    <div class='mb-1'></a>
                             <a  href='#' data-toggle='popover' title='Address' data-content='<a target=&quot;_blank&quot; href=&quot;https://www.google.com/maps/search/?api=1&query=$artisan->latitude,$artisan->longitude&quot;> $artisan->address</a>' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
                             <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
                             </div></div>
                             <div class='col-7 infoside text-left align-items-center'>
-                                <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                                <p class='infopar compname font-weight-bolder'>$artisan->companyname (<a href='/artisans/$artisan->slog'>$artisan->slog</a>)</p>
                                 <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                 <p class='infopar'>$artisan->services</p>
                                 <p class='infopar'>"; 
@@ -242,16 +242,17 @@ class onesearchController extends Controller
         ->orderBy(DB::raw('RAND(1234)'))
         ->whereRaw(DB::raw($query)."and artisans.enabled =?",[1] );
         $count=$data->count();
+        $result="<div class='col-12 col-md-12 text-muted text-center mb-4'>Showing search results for '$stuff'</div>";
         if ($count>0) {
             $artisans=$data->simplepaginate(20);
-            $result="";
+           
             foreach ($artisans as $artisan ) {
                 $result.="
                 <div class='col-12 col-md-3 '>
                         <div class='row pr-4 pl-4'>
                             <div class='col-12 mb-4  card artpage-card'>
                             <div class='row'>
-                            <div class='imgcover text-center col-5'>";
+                            <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                                 if(null!=$artisan->displaypicture) {
                                     $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
                                 }
@@ -259,13 +260,13 @@ class onesearchController extends Controller
                                     $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                                  }
                             $result.="  
-                                <div class='mb-1'>
+                                <div class='mb-1'></a>
                                 <a  href='#' data-toggle='popover' title='Address' data-content='$artisan->address' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
                                 <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
                                 </div>
                             </div>
                             <div class='col-7 infoside text-left align-items-center'>
-                                <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                                <p class='infopar compname font-weight-bolder'>$artisan->companyname (<a href='/artisans/$artisan->slog'>$artisan->slog</a>)</p>
                                 <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                 <p class='infopar'>$artisan->services</p>
                                 <p class='infopar text-right'><a href='/artisans/$artisan->slog' class=' text-white tobe '><i class='fas fa-expand-alt' title='view profile'></i></a></p>
@@ -280,7 +281,7 @@ class onesearchController extends Controller
             $result.="<div class='col-12'>". $artisans->links()." </div>";
             
         }else {
-            $result="<div class='col-12 errors text-center'>No artisans found</div>";
+            $result.="<div class='col-12 errors text-center'>No artisans found</div>";
         }
         return $result;
     }
@@ -314,18 +315,19 @@ class onesearchController extends Controller
         ;
         
 
-
+        $result="<div class='col-12 col-md-12 text-muted text-center mb-4'>Showing nearby artisans (click nearby button again to show all artisans)</div>
+        <div class='col-12 col-md-12 text-muted text-center mb-4'>Showing search results for '$stuff'</div>";
         $count=$data->count();
         if ($count>0) {
             $artisans=$data->simplepaginate(20);
-            $result="";
+            
             foreach ($artisans as $artisan ) {
                 $result.="
                 <div class='col-12 col-md-3 '>
                         <div class='row pr-4 pl-4'>
                             <div class='col-12 mb-4  card artpage-card'>
                             <div class='row'>
-                            <div class='imgcover text-center col-5'>";
+                            <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                             if(null!=$artisan->displaypicture) {
                                 $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
                             }
@@ -333,12 +335,12 @@ class onesearchController extends Controller
                                 $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
                              }
                         $result.="  
-                        <div class='mb-1'>
+                        <div class='mb-1'></a>
                                 <a  href='#' data-toggle='popover' title='Address' data-content='<a target=&quot;_blank&quot; href=&quot;https://www.google.com/maps/search/?api=1&query=$artisan->latitude,$artisan->longitude&quot;> $artisan->address</a>' data-html='true' data-trigger='manual' class='mr-3 stoplink text-white'><i class='fas fa-map-marker-alt fa-lg'></i></a>
                                 <a href='#' title='Phone' data-toggle='popover' data-trigger='manual' data-html='true' data-content='<a href=&quot;tel:$artisan->phone_no&quot;>$artisan->phone_no</a>' class='stoplink text-white'><i class='fas fa-phone fa-lg'></i></a>
                                 </div></div>
                                 <div class='col-7 infoside text-left align-items-center'>
-                                    <p class='infopar compname'>$artisan->companyname ($artisan->slog)</p>
+                                    <p class='infopar compname font-weight-bolder'>$artisan->companyname (<a href='/artisans/$artisan->slog'>$artisan->slog</a>)</p>
                                     <p class='infopar'>$artisan->city, $artisan->state state.</p>
                                     <p class='infopar'>$artisan->services</p>
                                     <p class='infopar'>"; 
@@ -361,7 +363,7 @@ class onesearchController extends Controller
             $result.="<div class='col-12'>". $artisans->links()." </div>";
             
         }else {
-            $result="<div class='col-12 errors text-center'>No artisans found</div>";
+            $result.="<div class='col-12 errors text-center'>No artisans found</div>";
         }
         return $result;
     }

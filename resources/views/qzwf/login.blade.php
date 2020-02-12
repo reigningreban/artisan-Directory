@@ -15,7 +15,7 @@
                             </a>
                         </div>
                         <h3 class="text-center">Admin Login</h3>
-                        <form action="/admin/login" method="post">
+                        <form action="/qzwf/login" method="post">
 
                             
 

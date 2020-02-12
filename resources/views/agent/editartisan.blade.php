@@ -1,13 +1,10 @@
-@extends('layout')
-@section('title','Signup')
-@section('pstyle')
-<style>
-    
-</style>
-@endsection
-@section('content')
-    <header class="myheader">
-        <div class="container">
+@extends('agent/dashlay')
+@section('title','Add Artisan')
+@section('myartA','active')
+@section('body')
+
+<header class="myheader scroll">
+        <div class="container pt-5">
             <div class="row">
                 <div class="col-md-3 col-sm-12"></div>
                 <div class="col-md-6 col-sm-12">
@@ -17,22 +14,26 @@
                                 <h4 class="font-weight-bold align"><img src="{{asset('img/1app1.png')}}" alt="" class="oneappimg">SEARCH</h4>
                             </a>
                         </div>
-                        <h3 class="text-center">Signup for free</h3>
+                        <h3 class="text-center">Edit artisan</h3>
                         <div class="errors">*All fields are required</div>
-                        <form action="/artisan/signup" method="post">
-
+                        <form action="/agent/editartisan/{{$artisan->slog}}" method="post">
+                            @if(session()->exists('success'))
+                                <div class="alert alert-success prompt">
+                                    {{session()->get('success')}}
+                                </div>
+                            @endif
                             <div class="entry">
                                 <div class="row">
                                     <div class="col">
                                         <label for="firstname" class="">Firstname:</label>
                                         <div class="input-group">
-                                            <input type="text" name="firstname" id="firstname" class="form-control" value="{{old('firstname')}}" autofocus>
+                                            <input type="text" name="firstname" id="firstname" class="form-control" value="@if(null!=old('firstname')){{old('firstname')}} @else {{$artisan->firstname}} @endif">
                                         </div>                                    
                                     </div>
                                     <div class="col">
                                         <label for="lastname" class="">Lastname:</label>
                                         <div class="input-group">
-                                            <input type="text" name="lastname" id="lastname" class="form-control" value="{{old('lastname')}}">
+                                            <input type="text" name="lastname" id="lastname" class="form-control" value="@if(null!=old('lastname')){{old('lastname')}} @else {{$artisan->lastname}} @endif">
                                         </div>
                                     </div>
                                 </div>
@@ -43,7 +44,7 @@
                             <div class="entry">
                                 <label for="bizname">Business Name:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="bizname" name="bizname" value="{{old('bizname')}}">
+                                    <input type="text" class="form-control" id="bizname" name="bizname" value="@if(null!=old('bizname')){{old('bizname')}} @else {{$artisan->companyname}} @endif">
                                 </div>
                                 <div class="errors">{{$errors->first('bizname')}} </div>
                             </div>
@@ -51,7 +52,7 @@
                             <div class="entry">
                                 <label for="slog">Slug:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="slog" name="slog" value="{{old('slog')}}" placeholder="a short unique name for your company...">
+                                    <input type="text" class="form-control" id="slog" name="slog" value="@if(null!=old('slog')){{old('slog')}} @else {{$artisan->slog}} @endif" placeholder="a short unique name for your company...">
                                 </div>
                                 <div class="errors">
                                     {{$errors->first('slog')}} 
@@ -59,43 +60,22 @@
                                 </div>
                             </div>
 
-                            <div class="entry">
-                                <label for="email">Email:</label>
-                                <div class="input-group">
-                                    <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
-                                </div>
-                                <div class="errors">{{$errors->first('email')}} </div>
-                            </div>
+                            
 
                             <div class="entry">
                                 <label for="phone">Phone Number:</label>
                                 <div class="input-group">
-                                    <input type="tel" class="form-control" id="phone" name="phone" value="{{old('phone')}}">
+                                    <input type="tel" class="form-control" id="phone" name="phone" value="@if(null!=old('phone')){{old('phone')}} @else {{$artisan->phone_no}} @endif">
                                 </div>
                                 <div class="errors">{{$errors->first('phone')}} </div>
                             </div>
 
-                            <div class="entry">
-                                <label for="password">Password:</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="password" name="password">
-                                </div>
-                                <div class="errors">{{$errors->first('password')}} </div>
-                            </div>
-
-                            <div class="entry">
-                                <label for="repass">Re-enter Password:</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="repass" name="repass">
-                                </div>
-                                <div class="errors">{{$errors->first('repass')}} </div>
-                            </div>
 
                             <div class="entry">
                                 <label for="address">Address:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="address" name="address" value="{{old('address')}}">
-                                    <input type="hidden" name="longitude" id="longitude"><input type="hidden" name="latitude" id="latitude">
+                                    <input type="text" class="form-control" id="address" name="address" value="@if(null!=old('address')){{old('address')}} @else {{$artisan->address}} @endif">
+                                    <!-- <input type="hidden" name="longitude" id="longitude"><input type="hidden" name="latitude" id="latitude"> -->
                                 </div>
                                 <div class="errors">{{$errors->first('address')}} </div>
                             </div>
@@ -132,24 +112,13 @@
                             </div>
                             <div class="errors">{{$errors->first('services')}} </div>
                             <div class="errors">{{$errors->first('others')}} </div>
-                            <!-- <div class="g-recaptcha" data-sitekey="6LfZedcUAAAAAENQoSnUPoUV2rxZbUud4aEGhoLx"></div> -->
-                            @if(env('GOOGLE_RECAPTCHA_KEY'))
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                    <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}"></div>
-                                    </div>
-                                </div>
-                            @endif
+                            
                             <div class="entry text-center mt-5 mb-5">
-                                <button class="btn btn-primary btn-block purple-btn">Signup</button>
+                                <button class="btn btn-primary btn-block purple-btn">Update</button>
                             </div>
                             @csrf
                         </form>
                         
-                        <p class="text-center">Already have an account? <a href="/artisan/login">Login here</a></p>
-                        <p class="text-center">
-                            <a href="/"><< <i class="fas fa-home"></i> Return to home</a>
-                        </p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-12"></div>
@@ -159,16 +128,21 @@
     <script>
         $(document).ready(function() {
             $('#otherserve').hide();
-            $.get('/artisan/states', function(data, status){
+            
+            $.get(window.location.pathname+'/statesedit', function(data, status){
                 let myresult = ("Data: " + data + "\nStatus: " + status);
                 document.getElementById('state').innerHTML =data;
             });
-            $.get('/artisan/services', function(data, status){
+            $.get(window.location.pathname+'/citiesedit', function(data, status){
+                let myresult = ("Data: " + data + "\nStatus: " + status);
+                document.getElementById('city').innerHTML =data;
+            });
+            $.get(window.location.pathname+'/servicesedit', function(data, status){
                     let myresult = ("Data: " + data + "\nStatus: " + status);
                     document.getElementById('services').innerHTML =data;
             });
+           
             // $('#services').hide();
-            getLocation();
         });
 
         $("body").on("change","#state", function(){
@@ -188,28 +162,7 @@
            }
         });
 
-        // $('#addserve').click(function () {
-        //     var slide=$('#adserveicon').attr("class");
-        //     if (slide=="fas fa-chevron-right") {
-        //         $('#services').show(500); 
-        //         $('#adserveicon').attr("class","fas fa-chevron-down");
-        //     }else{
-        //         $('#services').hide(500); 
-        //         $('#adserveicon').attr("class","fas fa-chevron-right");
-        //     }
-            
-        // });
-        function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else { 
-            alert("Geolocation is not supported by this browser.");
-        }
-        }
-
-        function showPosition(position) {
-            $('#latitude').val(position.coords.latitude);
-            $('#longitude').val(position.coords.longitude);
-        }
+        
+        
     </script>
 @endsection

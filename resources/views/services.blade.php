@@ -1,5 +1,5 @@
 @extends('nav')
-@section('title','1search - Services')
+@section('title','Services')
 @section('serva','active')
 @section('body')
     <div class="container-fluid scroll">

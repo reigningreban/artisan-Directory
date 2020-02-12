@@ -24,9 +24,9 @@
                 <li class="nav-item">
                     <a class="nav-link @yield('artA')" href="/artisans">Artisans</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link @yield('serva')" href="/services">Services</a>
-                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link @yield('agent')" href="/agent/login">Agent</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link rborder" href="/artisan/signup">Signup</a>
                 </li> 

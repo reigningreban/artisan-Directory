@@ -1,13 +1,10 @@
-@extends('layout')
-@section('title','Signup')
-@section('pstyle')
-<style>
-    
-</style>
-@endsection
-@section('content')
-    <header class="myheader">
-        <div class="container">
+@extends('agent/dashlay')
+@section('title','Add Artisan')
+@section('addartA','active')
+@section('body')
+
+<header class="myheader scroll">
+        <div class="container pt-5">
             <div class="row">
                 <div class="col-md-3 col-sm-12"></div>
                 <div class="col-md-6 col-sm-12">
@@ -17,10 +14,14 @@
                                 <h4 class="font-weight-bold align"><img src="{{asset('img/1app1.png')}}" alt="" class="oneappimg">SEARCH</h4>
                             </a>
                         </div>
-                        <h3 class="text-center">Signup for free</h3>
+                        <h3 class="text-center">Add an artisan</h3>
                         <div class="errors">*All fields are required</div>
-                        <form action="/artisan/signup" method="post">
-
+                        <form action="/agent/addartisan" method="post">
+                            @if(session()->exists('success'))
+                                <div class="alert alert-success prompt">
+                                    {{session()->get('success')}}
+                                </div>
+                            @endif
                             <div class="entry">
                                 <div class="row">
                                     <div class="col">
@@ -59,13 +60,7 @@
                                 </div>
                             </div>
 
-                            <div class="entry">
-                                <label for="email">Email:</label>
-                                <div class="input-group">
-                                    <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
-                                </div>
-                                <div class="errors">{{$errors->first('email')}} </div>
-                            </div>
+                            
 
                             <div class="entry">
                                 <label for="phone">Phone Number:</label>
@@ -75,21 +70,6 @@
                                 <div class="errors">{{$errors->first('phone')}} </div>
                             </div>
 
-                            <div class="entry">
-                                <label for="password">Password:</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="password" name="password">
-                                </div>
-                                <div class="errors">{{$errors->first('password')}} </div>
-                            </div>
-
-                            <div class="entry">
-                                <label for="repass">Re-enter Password:</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="repass" name="repass">
-                                </div>
-                                <div class="errors">{{$errors->first('repass')}} </div>
-                            </div>
 
                             <div class="entry">
                                 <label for="address">Address:</label>
@@ -141,15 +121,11 @@
                                 </div>
                             @endif
                             <div class="entry text-center mt-5 mb-5">
-                                <button class="btn btn-primary btn-block purple-btn">Signup</button>
+                                <button class="btn btn-primary btn-block purple-btn">Add Artisan</button>
                             </div>
                             @csrf
                         </form>
                         
-                        <p class="text-center">Already have an account? <a href="/artisan/login">Login here</a></p>
-                        <p class="text-center">
-                            <a href="/"><< <i class="fas fa-home"></i> Return to home</a>
-                        </p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-12"></div>

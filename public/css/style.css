@@ -3,7 +3,9 @@
 	  font-weight: bolder;
 	  font-size: 20px;
   }
-
+body{
+	font-family: 'Merienda One' !important;
+}
   .title{
 	  min-height: 200px;
   }
@@ -237,7 +239,7 @@ html, body {
 }
 .scroll{
 	background-color: white;
-	min-height: 100vh !important;
+	min-height: 90vh !important;
 }
 .reduced{
 	margin-bottom: .5rem;

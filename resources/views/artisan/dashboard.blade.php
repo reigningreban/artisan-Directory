@@ -1,5 +1,5 @@
 @extends('artisan/dashlay')
-@section('title','dashboard')
+@section('title','Dashboard')
 @section('body')
       <!-- end topnav -->
 
@@ -72,7 +72,8 @@
                       </table>
                     </div>
                     <div class="text-center">
-                      <a href="/artisan/editprofile" class="btn btn-primary purple-btn"><i class="fas fa-user-edit"></i>Edit profile</a> 
+                      <a href="/artisan/editprofile" class="btn btn-primary purple-btn mr-3"><i class="fas fa-user-edit"></i>Edit profile</a> 
+                      <a href="/artisans/{{$artisan->slog}}" class="btn btn-primary purple-btn"><i class="fas fa-eye"></i>Public Profile</a> 
                     </div>
                   </div>
                 </div>
@@ -97,7 +98,7 @@
                           <tr>
                             <td>Description:</td>
                             <td>
-                              <textarea name="descrip" id="descrip" cols="30" rows="5" maxlength="150" placeholder="@if(($artisan->description)==null)Description not added @endif">@if($artisan->description!=null){{$artisan->description}}@endif</textarea>
+                              <textarea clas='form-control' name="descrip" id="descrip" cols="30" rows="5" maxlength="150" placeholder="@if(($artisan->description)==null)Description not added @endif">@if($artisan->description!=null){{$artisan->description}}@endif</textarea>
                               <div class="text-right"><button class="btn purple-btn" onclick="this.innerHTML='Loading...'">Edit</button></div>
                               <div class="errors text-center">{{$errors->first('descrip')}} </div>
                             </td>

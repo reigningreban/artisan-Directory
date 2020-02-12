@@ -1,4 +1,4 @@
-@extends('admin/dashlay')
+@extends('qzwf/dashlay')
 @section('body')
 <div class="container-fluid scroll py-5">
         <h3 class="text-center">
@@ -12,7 +12,7 @@
                   <div class="col-3 col-md-1"></div>
                   <div class="col-md-5 col-12">
                       <div class="row">
-                          <div class="col-md-6 col-6">
+                          <div class="col-md-6 col-12">
                             <div class="imgcont text-center mb-3">
                                 <img src="@if(null!=$artisan->displaypicture) {{asset($artisan->displaypicture)}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profimg fixedimg" id="profimg">
                                 <p class="text-center">

@@ -25,7 +25,11 @@
                         <h3 class="text-center">Edit Profile</h3>
                         <div class="errors">*All fields are required</div>
                         <form action="/artisan/editprofile" method="post">
-
+                            @if(session()->exists('success'))
+                                <div class="alert alert-sucess prompt">
+                                    {{session()->get('success')}}
+                                </div>
+                            @endif
                             <div class="entry">
                                 <div class="row">
                                     <div class="col-12 col-md-6">

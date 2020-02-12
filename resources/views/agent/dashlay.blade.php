@@ -9,18 +9,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <style>
-      body{
-        font-size:smaller !important;
-      }
-      
-      @media (max-width: 768px) {
-        body{
-          font-size:X-small !important;
-        }
-        .prompt{
-          font-size:small !important;
-        }
-      }
+     
     </style>
     @yield('perstyle')
 @endsection
@@ -31,20 +20,20 @@
       <!-- Sidebar  -->
       <nav id="sidebar" class="active">
           <div class="sidebar-header">
-              <div class="imgcont text-center">
-                <img src="@if(null!=$artisan->displaypicture) {{asset($artisan->displaypicture)}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profnav fixedimg">
-              </div>
-              <p class="text-center">{{$artisan->companyname}}</p>
+              <h2>Agent</h2>
           </div>
 
           <ul class="list-unstyled components">
               
               <li>
-                  <a href="/artisan/dashboard" class="active"><i class="fas fa-user"></i> My Profile </a>
+                  <a href="/agent/dashboard" class="@yield('dashA')"><i class="fas fa-user"></i> My Profile </a>
               </li>  
               <li>
-                  <a href="#" class=""><i class="fa fa-star"></i> My Reviews </a>
+                  <a href="/agent/myartisans" class="@yield('myartA')"><i class="fa fa-users"></i> My Artisans </a>
               </li>   
+              <li>
+                  <a href="/agent/addartisan" class="@yield('addartA')"><i class="fas fa-user-plus"></i> Add Artisan</a>
+              </li>     
               <li>
                   <a href="/" class=""><i class="fas fa-home"></i> Home</a>
               </li>             
@@ -61,7 +50,7 @@
               <i class="fas fa-bars"></i>
               <span>Menu</span>
             </button>
-            <a href="/artisan/logout" id="logout" class="btn btn-info purple-btn">
+            <a href="/agent/logout" id="logout" class="btn btn-info purple-btn">
               <i class="fas fa-power-off"></i>
               <span>Logout</span>
             </a>

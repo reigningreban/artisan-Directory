@@ -14,16 +14,21 @@
                                 <h4 class="font-weight-bold align"><img src="{{asset('img/1app1.png')}}" alt="" class="oneappimg">SEARCH</h4>
                             </a>
                         </div>
-                        <h3 class="text-center">Login</h3>
+                        <h3 class="text-center">Agent Login</h3>
                         <div class="errors">*All fields are required</div>
-                        <form action="/artisan/login" method="post">
 
-                            
+                        <form action="/agent/login" method="post">
+
+                             @if(session()->exists('notval'))
+                                    <div class="alert alert-danger prompt">
+                                        {{session()->get('notval')}}
+                                    </div>
+                                 @endif
 
                             <div class="entry">
                                 <label for="email">E-mail:</label>
                                 <div class="input-group">
-                                    <input type="email" class="form-control" id="email" name="email" value="@if(Cookie::get('email') !== null){{Cookie::get('email') }} @else{{old('email')}} @endif">
+                                    <input type="email" class="form-control" id="email" name="email" value="@if(Cookie::get('agent_email') !== null){{Cookie::get('agent_email') }} @else{{old('email')}} @endif">
                                 </div>
                                 
                             </div>
@@ -37,7 +42,7 @@
                                             <i id="eyecon" class="fas fa-eye-slash"></i>
                                         </span>
                                     </div>
-                                    <input type="password" class="form-control" id="lpassword" name="lpassword" @if(Cookie::get('email') !== null) autofocus @endif >
+                                    <input type="password" class="form-control" id="lpassword" name="lpassword">
                                 </div>
                                 <div class="errors">{{$errors->first()}} </div>
                                 <div class="errors">@if (\Session::has('pass_crash')) {!! \Session::get('pass_crash') !!}@endif</div>
@@ -58,7 +63,7 @@
                             @csrf
                         </form>
                         <p class="text-center">Forgot password? <a href="">click to recover</a></p>
-                        <p class="text-center">Don't have an account? <a href="/artisan/signup">Signup here</a></p>
+                        <p class="text-center">Not yet an agent? <a href="/agent/apply">Apply here</a></p>
                         <p class="text-center">
                             <a href="/"><< <i class="fas fa-home"></i> Return to home</a>
                         </p>

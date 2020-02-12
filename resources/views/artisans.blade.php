@@ -1,4 +1,5 @@
 @extends('nav')
+@section('title','Artisans')
 @section('artA','active')
 @section('pstyle')
     <style>
@@ -18,6 +19,7 @@
         <div class="container pt-3">
             <div class="row">
                 <div class="col text-center">
+                    <button class="btn btn-outline-secondary mr-5" id="searchbtn"><i class="fas fa-search" id=""></i> Search</button>
                     <button class="btn pink-btn inactive" id="nearby"><i class="fas fa-map-marker-alt" id="nearicon"></i> Nearby</button>
                 </div>
             </div>
@@ -56,26 +58,7 @@
                                 });
                             }
                         });
-            // $("[data-toggle=popover]").popover({html:true})
-            //         $('body').popover({
-            //             placement: 'bottom',
-            //             container: 'body',
-            //             html: true,
-            //             selector: '[data-toggle=popover]',
-                    // }).on("focus", function () {
-                    //                 $(this).popover("show");
-                    //             }).on("focusout", function () {
-                    //                 var _this = this;
-                    //                 if (!$(".popover:hover").length) {
-                    //                     $(this).popover("hide");
-                    //                 }
-                    //                 else {
-                    //                     $('.popover').mouseleave(function() {
-                    //                         $(_this).popover("hide");
-                    //                         $(this).off('mouseleave');
-                    //                     });
-                    //                 }
-                    //             });        
+                  
                             
             $('html,body').animate({ scrollTop: 0 }, 'slow');
             $(document).on("keydown", "form", function(event) { 
@@ -117,6 +100,18 @@
                 }
                 
             });
+            $('#searchbtn').click(function () {
+                var text=$("#search").val();
+                if (text=="") {
+                    if ($('#nearby').attr('class')=="btn pink-btn inactive") {
+                        getartisans();
+                    }else{
+                        getLocation();
+                    }
+                }else{
+                    searcher();
+                }
+            })
             
             $('#nearby').click(function () {
                 if ($('#nearby').attr('class')=="btn pink-btn inactive") {
@@ -205,12 +200,11 @@
             if ($('#nearby').attr('class')=="btn pink-btn inactive") {
                 link="/artisans/search/";
                 link+=cat;
-                }else{
+                }else if ($('#latitude').val()!=null) {
                     var lat=$('#latitude').val();
                     var lon=$('#longitude').val();
                     link="/artisans/closesearch/";
                     link+=cat+'/'+lat+'/'+lon;
-                    
                 }
             
             $.get(link, function(data, status){

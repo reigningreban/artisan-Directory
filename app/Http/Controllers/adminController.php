@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\ArtisanSignupEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -51,7 +52,7 @@ class adminController extends Controller
                 session()->put('admin',$admin_id);
                 
                 
-                return redirect('admin/dashboard');
+                return redirect('qzwf/dashboard');
             }else{
                 return redirect()->back()->with('pass_crash','Invalid email or password')->withInput();
             }
@@ -66,7 +67,7 @@ class adminController extends Controller
     {
         $logged=$this->checker();
         if (!$logged) {
-            return redirect('admin/login');
+            return redirect('qzwf/login');
         }else {
             $artisan=DB::table('artisans');
             $artcount=$artisan->count();
@@ -81,14 +82,26 @@ class adminController extends Controller
             $pending=$pend->join('artisans','artisans.id','=','suggested_services.artisan_id')
             ->select('suggested_services.id as ID','artisans.*','suggested_services.*')
             ->get();
+            $agents=DB::table('agents')->where('validated',1)->get();
+            foreach ($agents as $agent ) {
+                $artisancount[$agent->id]=DB::table('artisans')->where('registered_by',$agent->id)->count();
+            }
+            $applicants=DB::table('agents')->where('validated',0)->get();
+            $agecount=DB::table('agents')->where('validated',1)->count();
+            $unvalcount=DB::table('agents')->whereRaw('validated = 0')->count();
 
-            return view('admin/dashboard',[
+            return view('qzwf/dashboard',[
                 'artcount'=>$artcount,
                 'art'=>$art,
                 'servecount'=>$servecount,
                 'services'=>$services,
                 'pendcount'=>$pendcount,
                 'pending'=>$pending,
+                'agecount'=>$agecount,
+                'unvalcount'=>$unvalcount,
+                'agents'=>$agents,
+                'applicants'=>$applicants,
+                'artisancount'=>$artisancount,
             ]);
         }
     }
@@ -99,7 +112,7 @@ class adminController extends Controller
     public function logout()
     {
         session()->flush();
-        return redirect('/admin/login');
+        return redirect('/qzwf/login');
     }
 
 
@@ -108,9 +121,24 @@ class adminController extends Controller
     {
         $logged=$this->checker();
         if (!$logged) {
-            return redirect('admin/login');
+            return redirect('qzwf/login');
         }else {
             DB::table('artisans')
+            ->where('id',$id)
+            ->update([
+                'enabled'=>0
+            ]);
+        }
+    }
+
+    //disable
+    public function agentdisable($id)
+    {
+        $logged=$this->checker();
+        if (!$logged) {
+            return redirect('qzwf/login');
+        }else {
+            DB::table('agents')
             ->where('id',$id)
             ->update([
                 'enabled'=>0
@@ -123,9 +151,24 @@ class adminController extends Controller
     {
         $logged=$this->checker();
         if (!$logged) {
-            return redirect('admin/login');
+            return redirect('qzwf/login');
         }else {
             DB::table('artisans')
+            ->where('id',$id)
+            ->update([
+                'enabled'=>1
+            ]);
+        }
+    }
+
+    //enable
+    public function agentenable($id)
+    {
+        $logged=$this->checker();
+        if (!$logged) {
+            return redirect('qzwf/login');
+        }else {
+            DB::table('agents')
             ->where('id',$id)
             ->update([
                 'enabled'=>1
@@ -139,7 +182,7 @@ class adminController extends Controller
     {
         $logged=$this->checker();
         if (!$logged) {
-            return redirect('admin/login');
+            return redirect('qzwf/login');
         }else {
             $service=DB::table('suggested_services')
             ->where('id',$id)
@@ -166,14 +209,52 @@ class adminController extends Controller
 
 
 
+
+    //approve
+    public function agentapprove($id)
+    {
+        $logged=$this->checker();
+        if (!$logged) {
+            return redirect('qzwf/login');
+        }else {
+            $service=DB::table('agents')
+            ->where('id',$id)
+            ->update([
+                'validated'=>1
+            ]);
+
+            
+
+            return redirect()->back();
+        }
+    }
+
+
+
     //disapprove
     public function disapprove($id)
     {
         $logged=$this->checker();
         if (!$logged) {
-            return redirect('admin/login');
+            return redirect('qzwf/login');
         }else {
             DB::table('suggested_services')
+            ->where('id',$id)
+            ->delete();
+
+            return redirect()->back();
+        }
+    }
+
+
+    //agent disapprove
+    public function agentdisapprove($id)
+    {
+        $logged=$this->checker();
+        if (!$logged) {
+            return redirect('qzwf/login');
+        }else {
+            DB::table('agents')
             ->where('id',$id)
             ->delete();
 
@@ -186,7 +267,7 @@ class adminController extends Controller
     {
         $logged=$this->checker();
         if (!$logged) {
-            return redirect('admin/login');
+            return redirect('qzwf/login');
         }else {
             $artisan=DB::table('artisans')
             ->leftJoin('offered_by','artisans.id','=','offered_by.artisan_id','left outer')
@@ -198,9 +279,49 @@ class adminController extends Controller
             ->where('artisans.id',$id)
             ->first();
 
-            return view('admin/artisanprofile',[
+            return view('qzwf/artisanprofile',[
                 'artisan'=>$artisan,
             ]);
         }
     }
+
+
+
+    //agent profile from Admin
+    public function agent($id)
+    {
+        $logged=$this->checker();
+        if (!$logged) {
+            return redirect('qzwf/login');
+        }else {
+            $agent=DB::table('agents')
+            ->join('cities','cities.id','=','agents.city_id')
+            ->join('states','states.id','=','cities.state_id')
+            ->where('agents.id',$id)
+            ->first();
+
+            return view('qzwf/agentprofile',[
+                'agent'=>$agent,
+            ]);
+        }
+    }
+    public function test()
+    {
+        $id=1;
+        $this->regmail($id);
+    }
+
+    public function regmail($id)
+    {
+
+        $artisan=DB::table('artisans')
+        ->where('id',$id)
+        ->first();
+        
+
+    $data = ['artisan' => $artisan];
+
+    \Mail::to('francisokewale@gmail.com')->send(new ArtisanSignupEmail($data));
+    }
+
 }

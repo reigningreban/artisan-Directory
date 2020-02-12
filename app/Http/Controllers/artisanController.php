@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\ArtisanSignupEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,18 @@ use App\Http\Requests;
 use Image;
 class artisanController extends Controller
 {
+    public function regmail($id)
+    {
+
+        $artisan=DB::table('artisans')
+        ->where('id',$id)
+        ->first();
+        
+
+    $data = ['artisan' => $artisan];
+
+    \Mail::to($artisan->email)->send(new ArtisanSignupEmail($data));
+    }
 
     //checker
     public function checker()
@@ -205,7 +218,7 @@ class artisanController extends Controller
             
             session()->flush();
             session()->put('artisan',$artisan_id);
-
+            $this->regmail($artisan_id);
             return redirect('artisan/dashboard');
         }else {
             return redirect()->back()->withInput()->with('fail','This slog has been taken');
@@ -241,7 +254,7 @@ class artisanController extends Controller
                 'firstname'=>'required',
                 'lastname'=>'required_with:firstname',
                 'bizname'=>'required',
-                'slog'=>'required|unique:artisans,slog'.",$artisan->ID",
+                'slog'=>'required',
                 'email'=>'required|email|unique:artisans,email'.",$artisan->ID",
                 'phone'=>'required|numeric|digits:11|unique:artisans,phone_no'.",$artisan->ID",
                 'address'=>'required',
@@ -259,51 +272,73 @@ class artisanController extends Controller
             $address=request('address');
             $city=request('city');
             $services=request('services');
-            $slog=request('slog');
-
-            DB::table('artisans')
-            ->where('id',$id)
-            ->update([
-                'companyname'=>$bizname,
-                'firstname'=>$firstname,
-                'lastname'=>$lastname,
-                'email'=>$email,
-                'address'=>$address,
-                'city_id'=>$city,
-                'phone_no'=>$phone,
-                'slog'=>$slog,
-            ]);
-            $myoffered=DB::table('offered_by')
-            ->where('artisan_id',$id)
-            ->pluck('service_id')
-            ->toArray();
-            foreach ($services as $service ) {
-                if (!in_array($service,$myoffered)) {
-                    DB::table('offered_by')
-                ->insert([
-                    'artisan_id'=>$artisan->ID,
-                    'service_id'=>$service
-                ]);
-                }
-            }
-            foreach ($myoffered as $job) {
-                if (!in_array($job,$services)) {
-                    DB::table('offered_by')
-                    ->whereRaw('artisan_id=? and service_id=?',[$artisan->ID,$job])
-                    ->delete();
-                }
-            }
-            if(request('others')!=null){
-                $others=request('others');
-                DB::table('suggested_services')
-                ->insert([
-                    'service'=>$others,
-                    'artisan_id'=>$id
-                ]);
-            }
+            $slog=$this->seoUrl(request('slog')) ;
             
 
-            return redirect('artisan/dashboard')->with('success','Profile has been successfully updated');
+            $unique=DB::table('artisans')
+            ->where('slog',$slog)
+            ->doesntExist();
+        
+            $ontrack=true;
+            if (!$unique) {
+                $instance=DB::table('artisans')
+                ->where('slog',$slog)
+                ->first();
+                if ($instance->id==$id) {
+                    $ontrack=true;
+                }else {
+                    $ontrack=false;
+                }
+            }else {
+                $ontrack=true;
+            }
+            if ($ontrack) {
+                DB::table('artisans')
+                ->where('id',$id)
+                ->update([
+                    'companyname'=>$bizname,
+                    'firstname'=>$firstname,
+                    'lastname'=>$lastname,
+                    'email'=>$email,
+                    'address'=>$address,
+                    'city_id'=>$city,
+                    'phone_no'=>$phone,
+                    'slog'=>$slog,
+                ]);
+                $myoffered=DB::table('offered_by')
+                ->where('artisan_id',$id)
+                ->pluck('service_id')
+                ->toArray();
+                foreach ($services as $service ) {
+                    if (!in_array($service,$myoffered)) {
+                        DB::table('offered_by')
+                    ->insert([
+                        'artisan_id'=>$artisan->ID,
+                        'service_id'=>$service
+                    ]);
+                    }
+                }
+                foreach ($myoffered as $job) {
+                    if (!in_array($job,$services)) {
+                        DB::table('offered_by')
+                        ->whereRaw('artisan_id=? and service_id=?',[$artisan->ID,$job])
+                        ->delete();
+                    }
+                }
+                if(request('others')!=null){
+                    $others=request('others');
+                    DB::table('suggested_services')
+                    ->insert([
+                        'service'=>$others,
+                        'artisan_id'=>$id
+                    ]);
+                }
+                
+
+                return redirect('artisan/dashboard')->with('success','Profile has been successfully updated');
+            }else {
+                return redirect()->with('fail','This slog is taken')->withInput();
+            }
         }
     }
 
@@ -367,7 +402,54 @@ class artisanController extends Controller
     {
         
         
-        
+$latitude=33.900002;
+$longitude=-119.199997;
+$geolocation = $latitude.','.$longitude;
+$request = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='.$geolocation.'&sensor=false'; 
+$file_contents = file_get_contents($request);
+$json_decode = json_decode($file_contents);
+if(isset($json_decode->results[0])) {
+    $response = array();
+    foreach($json_decode->results[0]->address_components as $addressComponet) {
+        if(in_array('political', $addressComponet->types)) {
+                $response[] = $addressComponet->long_name; 
+        }
+    }
+
+    if(isset($response[0])){ $first  =  $response[0];  } else { $first  = 'null'; }
+    if(isset($response[1])){ $second =  $response[1];  } else { $second = 'null'; } 
+    if(isset($response[2])){ $third  =  $response[2];  } else { $third  = 'null'; }
+    if(isset($response[3])){ $fourth =  $response[3];  } else { $fourth = 'null'; }
+    if(isset($response[4])){ $fifth  =  $response[4];  } else { $fifth  = 'null'; }
+
+    if( $first != 'null' && $second != 'null' && $third != 'null' && $fourth != 'null' && $fifth != 'null' ) {
+        echo "<br/>Address:: ".$first;
+        echo "<br/>City:: ".$second;
+        echo "<br/>State:: ".$fourth;
+        echo "<br/>Country:: ".$fifth;
+    }
+    else if ( $first != 'null' && $second != 'null' && $third != 'null' && $fourth != 'null' && $fifth == 'null'  ) {
+        echo "<br/>Address:: ".$first;
+        echo "<br/>City:: ".$second;
+        echo "<br/>State:: ".$third;
+        echo "<br/>Country:: ".$fourth;
+    }
+    else if ( $first != 'null' && $second != 'null' && $third != 'null' && $fourth == 'null' && $fifth == 'null' ) {
+        echo "<br/>City:: ".$first;
+        echo "<br/>State:: ".$second;
+        echo "<br/>Country:: ".$third;
+    }
+    else if ( $first != 'null' && $second != 'null' && $third == 'null' && $fourth == 'null' && $fifth == 'null'  ) {
+        echo "<br/>State:: ".$first;
+        echo "<br/>Country:: ".$second;
+    }
+    else if ( $first != 'null' && $second == 'null' && $third == 'null' && $fourth == 'null' && $fifth == 'null'  ) {
+        echo "<br/>Country:: ".$first;
+    }
+  }else {
+      echo "wrong";
+  }
+
         
 
         }
