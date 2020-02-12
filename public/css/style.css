@@ -124,7 +124,13 @@ a:hover{
 	margin: 0;
 	width: 100;
 }
-
+.masthead {
+	height: 100vh;
+	min-height: 500px;
+	
+	
+	
+  }
 .dashfoot{
 	background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8),rgba(29, 38, 113, 0.8)), url("../img/barber3.jpg") 0 0 fixed;
 	background: linear-gradient(rgba(29, 38, 113, 0.8),rgba(29, 38, 113, 0.8)), url("../img/barber3.jpg")  0 0 fixed no-repeat center; /* The least supported option. */
