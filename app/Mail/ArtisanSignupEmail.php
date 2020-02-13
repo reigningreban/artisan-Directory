@@ -22,7 +22,7 @@ class ArtisanSignupEmail extends Mailable
     {
         $address = 'hi@1appgo.com';
         $subject = 'Welcome';
-        $name = 'Opeyemi from 1search';
+        $name = '1search';
         
         return $this->view('emails.artisansignup')
                     ->from($address, $name)

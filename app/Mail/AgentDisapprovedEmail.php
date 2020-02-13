@@ -22,7 +22,7 @@ class AgentDisapprovedEmail extends Mailable
     {
         $address = 'hi@1appgo.com';
         $subject = 'Disapproved';
-        $name = 'Opeyemi from 1search';
+        $name = '1search';
         
         return $this->view('emails.agentdisapproved')
                     ->from($address, $name)
