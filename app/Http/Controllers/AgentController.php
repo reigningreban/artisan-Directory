@@ -759,4 +759,8 @@ class AgentController extends Controller
 
        }
     }
+    public function nothing()
+    {
+        
+    }
 }
