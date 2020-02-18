@@ -674,7 +674,7 @@ class AgentController extends Controller
     }
 
 
-
+//some comments
     public function artisanpicupload(Request $request,$slog)
     {
         if (!$this->checker()) {
