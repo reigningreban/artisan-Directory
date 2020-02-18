@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Mail\ArtisanSignupEmail;
 use App\Mail\AgentApprovedEmail;
 use App\Mail\AgentDisapprovedEmail;
@@ -222,7 +223,7 @@ class adminController extends Controller
             $service=DB::table('agents')
             ->where('id',$id)
             ->update([
-                'validated'=>1
+                'validated'=>1,
             ]);
 
             $this->appmail($id);
@@ -311,8 +312,7 @@ class adminController extends Controller
     }
     public function test()
     {
-        $id=1;
-        $this->regmail($id);
+        return str::random('50');
     }
 
     public function regmail($id)

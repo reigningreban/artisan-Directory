@@ -21,7 +21,7 @@
                       <div class="col-md-4 col-3"></div>
                       <div class="col-md-4 col-6">
                          <div class="imgcont text-center">
-                      <img src="@if(null!=$artisan->displaypicture) {{asset($artisan->displaypicture)}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profimg fixedimg" id="profimg">
+                      <img src="@if(null!=$artisan->displaypicture) {{$artisan->displaypicture}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profimg fixedimg" id="profimg">
                       <div class="text-right">
                         <span id="prfimg" class="btn purple-btn"><i class="fas fa-edit" id="load"></i></span>
                       </div>
@@ -33,7 +33,7 @@
                       <div class="col-md-4"></div>
                   </div>
                    
-                    <form action="/artisan/picupload" method="post" id="imageform" enctype="multipart/form-data">
+                    <form action="/agent/artisanpicupload/{{$artisan->slog}}" method="post" id="imageform" enctype="multipart/form-data">
                         <input type="file" accept="image/*" name="image" id="upprfimg" class="invisible">
                         <div class="errors text-center">{{$errors->first('image')}}</div>
                         @csrf

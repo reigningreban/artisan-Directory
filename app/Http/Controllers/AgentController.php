@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\AgentSignupEmail;
-
+use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -236,7 +236,7 @@ class AgentController extends Controller
                     'city_id'=>$city,
                     'registered'=>$time,
                     'registered_by'=>$agent_id,
-                    'phone_no'=>$phone
+                    'phone_no'=>$phone,
                 ]);
                 
                 if ((request('longitude')!=null)&&(request('latitude')!=null)) {
@@ -641,7 +641,7 @@ class AgentController extends Controller
         }
     }
 
-
+//     
     public function picupload(Request $request)
     {
         if (!$this->checker()) {
@@ -651,29 +651,56 @@ class AgentController extends Controller
             $data=request()->validate([
                 'image'=>'bail|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ]);
-            $image=request('image');
+            $image = $request->file('image');
 
-            $name = time().'.'.$image->extension(); 
-        
-            $destinationPath = public_path('/pics/thumbs');
-            $img = Image::make($image->getRealPath());
-            $img->resize(100, 100, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$name);
-    
-            $destinationPath = public_path('pics/agent/display/');
-            $image->move($destinationPath, $name);
-    
-   
-            $thumblink="/pics/thumbs".$name;
-            $link="pics/agent/display/".$name;
+            $name = $request->file('image')->getClientOriginalName();
 
-            
-            
+            $image_name = $request->file('image')->getRealPath();;
+
+            Cloudder::upload($image_name, null,[
+                'folder'=>'1search/agents',
+                'public_id' =>$agent_id
+            ]);
+            $info=Cloudder::getResult();
+            $link=$info['secure_url'];
             DB::table('agents')
             ->where('id',$agent_id)
             ->update([
                 'picture'=>$link,
+            ]);
+
+            return redirect()->back()->with('success','Image has been successfully uploaded');
+        }
+    }
+
+
+
+    public function artisanpicupload(Request $request,$slog)
+    {
+        if (!$this->checker()) {
+            return redirect('/agent/login');
+        }else {
+            $artisan=$this->artisan($slog);
+            $agent_id=session()->get('agent');
+            $data=request()->validate([
+                'image'=>'bail|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+            $image = $request->file('image');
+
+            $name = $request->file('image')->getClientOriginalName();
+
+            $image_name = $request->file('image')->getRealPath();;
+
+            Cloudder::upload($image_name, null,[
+                'folder'=>'1search/artisans',
+                'public_id' =>$artisan->ID
+            ]);
+            $info=Cloudder::getResult();
+            $link=$info['secure_url'];
+            DB::table('artisans')
+            ->where('id',$artisan->ID)
+            ->update([
+                'displaypicture'=>$link,
             ]);
 
             return redirect()->back()->with('success','Image has been successfully uploaded');

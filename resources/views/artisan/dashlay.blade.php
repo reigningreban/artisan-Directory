@@ -32,7 +32,7 @@
       <nav id="sidebar" class="active">
           <div class="sidebar-header">
               <div class="imgcont text-center">
-                <img src="@if(null!=$artisan->displaypicture) {{asset($artisan->displaypicture)}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profnav fixedimg">
+                <img src="@if(null!=$artisan->displaypicture) {{$artisan->displaypicture}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profnav fixedimg">
               </div>
               <p class="text-center">{{$artisan->companyname}}</p>
           </div>

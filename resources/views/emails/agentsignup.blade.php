@@ -19,10 +19,10 @@
                                 <h2 class="text-secondary text-center">
                                 Application to 
                                     <a href="/">
-                                        <span class="font-weight-bold" style="color:#4a2d43;"><img src="{{asset('img/1app1.png')}}" alt="" class="oneappimg">SEARCH</span>
+                                        <span class="font-weight-bold" style="color:#4a2d43;">1SEARCH</span>
                                     </a>
                                 </h2>
-                                <h5 style="color: #9e6161;" class="mb-3">Hi {{$agent->firstname ?? ''}},</h5>
+                                <h4 style="color: #9e6161;" class="mb-3">Hi {{$agent->firstname ?? ''}},</h4>
                                 <p>Your application to join 1search as an agent has been recieved.</p>
                                 <p>We are currently reviewing your account and will let you know when you have been approved.</p>
                                 @include('emails/foot')

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link href='https://fonts.googleapis.com/css?family=GFS Neohellenic' rel='stylesheet'>
     <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -45,7 +44,7 @@
 <head>
 	<title>1search - @yield('title','One stop search for artisans')</title>
 </head>
-<body>
+<body style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
     <div class="se-pre-con"></div>
 
 @yield('content')

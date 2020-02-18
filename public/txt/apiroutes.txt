@@ -1,0 +1,233 @@
+1Search API
+
+
+#author --Oke Francis
+
+If you're here then you already know what 1Search is, please protect these API's.
+All responses are in json.
+Enjoy... 
+
+
+| Get All services
+|-------------------------------------------------------------------------------
+| Description:    Gets all of the services in the application
+| URL:            /api/c2568/services
+| Method:         GET
+| Returns:        Json array containing all of Services 1Search currently offers
+
+
+| Get All states
+|-------------------------------------------------------------------------------
+| Description:    Gets all of the states in Nigeria
+| URL:            /api/c2568/states
+| Method:         GET
+| Returns:        Json array containing all of states in Nigeria
+
+
+| Get All cities
+|-------------------------------------------------------------------------------
+| Description:    Gets all of the cities in the chosen state
+| URL:            /api/c2568/cities
+| Method:         GET
+| Send:           state_id
+| Returns:        Json array containing all of cities in the state
+
+
+| Get Random Artisans
+|-------------------------------------------------------------------------------
+| Description:    Fetches a number of random artisans. You choose the number
+| URL:            /api/c2568/randartisan
+| Method:         GET
+| Send:           num
+| Returns:        Json array containing all information for a few random artisans.
+
+
+| Get All Artisans
+|-------------------------------------------------------------------------------
+| Description:    Fetches all random artisans in a periodically shuffled order.
+| URL:            /api/c2568/artisans
+| Method:         GET
+| Returns:        Json array containing information for all artisans.
+
+
+| Get a single Artisan
+|-------------------------------------------------------------------------------
+| Description:    Fetches a single artisan based on email.
+| URL:            /api/c2568/artisan
+| Method:         POST
+| Send:           email
+| Returns:        Json array containing information for the artisan.
+
+
+| Artisan Login
+|-------------------------------------------------------------------------------
+| Description:    Validates Inputted credentials and logs artisan in.
+| URL:            /api/c2568/artisan_login
+| Method:         POST
+| Send:           email,password
+| Returns:        Json array containing sesscode and user email.
+
+
+| Artisan Signup
+|-------------------------------------------------------------------------------
+| Description:    Validates Inputted credentials for signup and writes to db.
+| URL:            /api/c2568/artisan_signup
+| Method:         POST
+| Send:           firstname,lastname,bizname(companyname),slog,email,phone,password,repass(repeat password),address,city(city id),services(#optional if others is not null, array),others(#optional, user can suggest a new service),longitude,latitude.
+| Returns:        Json array containing sesscode and user email.
+
+
+| Artisan Edit Profile
+|-------------------------------------------------------------------------------
+| Description:    Validates Inputted credentials for profile edit and update db.
+| URL:            /api/c2568/artisan_editprofile
+| Method:         POST
+| Send:           firstname,lastname,bizname(companyname),slog,email,phone,address,city(city id),services(#optional if 'others' is not null, array),others(#optional, user can suggest a new service),description(#optional).
+| Returns:        Json array containing status.
+
+
+| Artisan Change Password
+|-------------------------------------------------------------------------------
+| Description:    Validates Inputted credentials for password change and update db.
+| URL:            /api/c2568/artisan_changepass
+| Method:         POST
+| Send:           sesscode,email,oldpass,newpass,repass
+| Returns:        Json array containing status.
+
+
+
+| Search
+|-------------------------------------------------------------------------------
+| Description:    Filters with search string
+| URL:            /api/c2568/search
+| Method:         POST
+| Send:           data
+| Returns:        Search results
+
+| nearby
+|-------------------------------------------------------------------------------
+| Description:    Filters with location
+| URL:            /api/c2568/nearby
+| Method:         POST
+| Send:           longitude, latitude
+| Returns:        Search results
+
+
+| search nearby
+|-------------------------------------------------------------------------------
+| Description:    Filters with location and search
+| URL:            /api/c2568/nearbysearch
+| Method:         POST
+| Send:           longitude, latitude, data
+| Returns:        Search results
+
+
+
+|Artisan upload picture 
+|-------------------------------------------------------------------------------
+| Description:    Uploads a profile picture for an artisan
+| URL:            /api/c2568/artisan_picupload
+| Method:         POST
+| Send:           image, sesscode, email
+| Returns:        Status
+
+
+|Agent apply  
+|-------------------------------------------------------------------------------
+| Description:    sends Agent application
+| URL:            /api/c2568/agent_apply
+| Method:         POST
+| Send:           firstname,lastname,email,city(city id),address,phone,password,repass(repeat password)
+| Returns:        Status
+
+
+Agent login  
+|-------------------------------------------------------------------------------
+| Description:    Login as an agent
+| URL:            /api/c2568/agent_login
+| Method:         POST
+| Send:           email,password
+| Returns:        Status
+
+
+Agent details  
+|-------------------------------------------------------------------------------
+| Description:    Get details of an agent
+| URL:            /api/c2568/agent
+| Method:         POST
+| Send:           email,sesscode
+| Returns:        Status
+
+
+Agent add artisan  
+|-------------------------------------------------------------------------------
+| Description:    Add an artisan
+| URL:            /api/c2568/agent_add_artisan
+| Method:         POST
+| Send:           email(agent),sesscode(agent),firstname,lastname,bizname(company name),slog,phone,address,city(city id),services(#may be optional if 'others' is not null),others(#optional,suggest another service),longitude,latitude
+| Returns:        Status
+
+
+Agent view artisans
+|-------------------------------------------------------------------------------
+| Description:    View artisans signed up under an agent
+| URL:            /api/c2568/agent_myartisans
+| Method:         POST
+| Send:           email(agent),sesscode(agent)
+| Returns:        Status
+
+
+Agent edit artisan
+|-------------------------------------------------------------------------------
+| Description:    Edit an artisans signed up under an agent
+| URL:            /api/c2568/agent_editartisan
+| Method:         POST
+| Send:           email(agent),sesscode(agent),firstname,lastname,bizname,phone,address,city(city_id),services,others
+| Returns:        Status
+
+Agent edit self
+|-------------------------------------------------------------------------------
+| Description:    Edit an agent
+| URL:            /api/c2568/agent_myedit
+| Method:         POST
+| Send:           email(agent),sesscode(agent),firstname,lastname,phone,address,city(city_id)
+| Returns:        Status
+
+
+
+Agent logout
+|-------------------------------------------------------------------------------
+| Description:    Logout
+| URL:            /api/c2568/agent_logout
+| Method:         POST
+| Send:           email(agent),sesscode(agent),logout=true
+| Returns:        Status
+
+
+Artisan logout
+|-------------------------------------------------------------------------------
+| Description:    Logout
+| URL:            /api/c2568/artisan_logout
+| Method:         POST
+| Send:           email(agent),sesscode(agent),logout=true
+| Returns:        Status
+
+
+
+Agent upload picture
+|-------------------------------------------------------------------------------
+| Description:    Upload a profile picture as an agent
+| URL:            /api/c2568/agent_picupload
+| Method:         POST
+| Send:           email(agent),sesscode(agent),image(file)
+| Returns:        Status
+
+
+
+Agent upload picture to an artisan
+|-------------------------------------------------------------------------------
+| Description:    Upload a profile picture for an artisan as an agent
+| URL:            /api/c2568/agent_artpicupload
+| Method:         POST
+| Send:           email(agent),sesscode(agent),image(file),slog(artisan)
+| Returns:        Status

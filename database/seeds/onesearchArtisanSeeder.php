@@ -31,14 +31,13 @@ class onesearchArtisanSeeder extends Seeder
         $lat=7.348720;
         $lon=3.879290;
 
-        $artisans=DB::table('artisans')
+        $artisans=DB::table('agents')
         ->get();
         foreach ($artisans as $artisan ) {
-            DB::table('artisans')
+            DB::table('agents')
             ->where('id',$artisan->id)
             ->update([
-                'latitude'=>$lat,
-                'longitude'=>$lon
+                'apicode'=>str::random('50'),
             ]);
         }
     }

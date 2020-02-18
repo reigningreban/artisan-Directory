@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\ArtisanSignupEmail;
+use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Session;
 use Cookie;
 use Geographical;
@@ -184,7 +186,7 @@ class artisanController extends Controller
                 'address'=>$address,
                 'city_id'=>$city,
                 'registered'=>$time,
-                'phone_no'=>$phone
+                'phone_no'=>$phone,
             ]);
             
             if ((request('longitude')!=null)&&(request('latitude')!=null)) {
@@ -542,7 +544,7 @@ if(isset($json_decode->results[0])) {
     {
         session()->flush();
         $data=request()->validate([
-            'email'=>'required|email:rfc,dns',
+            'email'=>'required|email',
             'lpassword'=>'required',
             
         ]);
@@ -668,23 +670,19 @@ if(isset($json_decode->results[0])) {
             $data=request()->validate([
                 'image'=>'bail|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ]);
-            $image=request('image');
+            $image = $request->file('image');
 
-            $name = time().'.'.$image->extension(); 
-        
-            $destinationPath = public_path('/pics/thumbs');
-            $img = Image::make($image->getRealPath());
-            $img->resize(100, 100, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$name);
-    
-            $destinationPath = public_path('pics/artisan/display/');
-            $image->move($destinationPath, $name);
-    
-   
-            $thumblink="/pics/thumbs".$name;
-            $link="pics/artisan/display/".$name;
+            $name = $request->file('image')->getClientOriginalName();
 
+            $image_name = $request->file('image')->getRealPath();;
+
+            Cloudder::upload($image_name, null,[
+                'folder'=>'1search/artisans',
+                'public_id' =>$artisan_id
+            ]);
+            $info=Cloudder::getResult();
+            $link=$info['secure_url'];
+            
             
             
             DB::table('artisans')

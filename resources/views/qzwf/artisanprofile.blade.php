@@ -14,7 +14,7 @@
                       <div class="row">
                           <div class="col-md-6 col-12">
                             <div class="imgcont text-center mb-3">
-                                <img src="@if(null!=$artisan->displaypicture) {{asset($artisan->displaypicture)}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profimg fixedimg" id="profimg">
+                                <img src="@if(null!=$artisan->displaypicture) {{$artisan->displaypicture}} @else {{asset('img/tempavt.png')}} @endif" alt="profile picture" class="profimg fixedimg" id="profimg">
                                 <p class="text-center">
                                   <h6 class="font-weight-bolder">{{$artisan->firstname}} {{$artisan->lastname}}</h6>
                                 </p>

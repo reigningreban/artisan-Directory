@@ -114,6 +114,7 @@ Route::get('/agent/editartisan/{slog}/statesedit','agentController@statesedit');
 Route::get('/agent/citiesedit','agentController@mycitiesedit');
 Route::get('/agent/statesedit','agentController@mystatesedit');
 Route::post('/agent/picupload','agentController@picupload');
+Route::post('/agent/artisanpicupload/{slog}','agentController@artisanpicupload');
 Route::get('/agent/editprofile','agentController@showmyprofile');
 Route::post('/agent/editprofile','agentController@editmyprofile');
 

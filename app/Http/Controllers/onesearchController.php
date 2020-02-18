@@ -31,7 +31,7 @@ class onesearchController extends Controller
                             <div class='row'>
                                 <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                                     if(null!=$artisan->displaypicture) {
-                                        $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                                        $result.="<img src='".$artisan->displaypicture."' alt='profile picture' class='home-card-img fixedimg'>";
                                     }
                                      else {
                                         $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
@@ -83,7 +83,7 @@ class onesearchController extends Controller
                         <div class='row'>
                         <div class='imgcover text-center col-5'> <a href='/artisans/$artisan->slog'>";
                             if(null!=$artisan->displaypicture) {
-                                $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                                $result.="<img src='".$artisan->displaypicture."' alt='profile picture' class='home-card-img fixedimg'>";
                             }
                              else {
                                 $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
@@ -183,7 +183,7 @@ class onesearchController extends Controller
                         <div class='row'>
                         <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                         if(null!=$artisan->displaypicture) {
-                            $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                            $result.="<img src='".$artisan->displaypicture."' alt='profile picture' class='home-card-img fixedimg'>";
                         }
                          else {
                             $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
@@ -254,7 +254,7 @@ class onesearchController extends Controller
                             <div class='row'>
                             <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                                 if(null!=$artisan->displaypicture) {
-                                    $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                                    $result.="<img src='".$artisan->displaypicture."' alt='profile picture' class='home-card-img fixedimg'>";
                                 }
                                  else {
                                     $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
@@ -329,7 +329,7 @@ class onesearchController extends Controller
                             <div class='row'>
                             <div class='imgcover text-center col-5'><a href='/artisans/$artisan->slog'>";
                             if(null!=$artisan->displaypicture) {
-                                $result.="<img src='".asset($artisan->displaypicture)."' alt='profile picture' class='home-card-img fixedimg'>";
+                                $result.="<img src='".$artisan->displaypicture."' alt='profile picture' class='home-card-img fixedimg'>";
                             }
                              else {
                                 $result.="<img src='".asset('img/tempavt.png')."' alt='profile picture' class='home-card-img fixedimg'>";
