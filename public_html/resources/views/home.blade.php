@@ -1,4 +1,5 @@
 @extends('nav')
+@section('metadesc','Access artisans all around Nigeria fast and easy.')
 @section('pstyle')
     <style>
       
@@ -86,28 +87,7 @@
                     <div class="row text-center" id="randart">
                         
 
-                    <div class='col-12 col-md-4 '>
-                    <div class='row'>
-                        <div class='col-md-11 col-12 mb-4 art-card card'>
-                            <div class='row'>
-                                <div class='imgcover text-center col-5'>
-                                  <img src="{{asset('img/tempavt.png')}}" alt='profile picture' class='home-card-img fixedimg'>
-                                  <div class="mb-1">
-                                      <a  href="#" data-toggle="popover" title="Address" data-content="huio" data-trigger="focus" class="mr-3 stoplink text-white"><i class="fas fa-map-marker-alt fa-lg"></i></a>
-                                      <a href="#" title="Phone" data-toggle="popover" data-trigger="focus" data-content="Phone number" class="stoplink text-white"><i class="fas fa-phone fa-lg"></i></a>
-                                      
-                                  </div>
-                                </div>
-                                <div class='col-7 infoside text-left align-items-center'>
-                                    <p class='infopar compname'>companyname (slog)</p>
-                                    <p class='infopar'>city, state state.</p>
-                                    <p class='infopar'>services</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='col-md-1'></div>
-                    </div>
-                </div>
+                    
 
 
                     </div>

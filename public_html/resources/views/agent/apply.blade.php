@@ -67,7 +67,7 @@
                             <div class="entry">
                                 <label for="address">Address:</label>
                                 <div class="input-group">
-                                    <input type="tel" class="form-control" id="address" name="address" value="{{old('address')}}">
+                                    <input type="text" class="form-control" id="address" name="address" value="{{old('address')}}">
                                 </div>
                                 <div class="errors">{{$errors->first('address')}} </div>
                             </div>
