@@ -77,12 +77,12 @@ Route::get('/qzwf/enable/{id}','adminController@enable');
 
 Route::get('/qzwf/agentdisable/{id}','adminController@agentdisable');
 Route::get('/qzwf/agentenable/{id}','adminController@agentenable');
-Route::get('/qzwf/approve/{id}','admincontroller@approve');
-Route::get('/qzwf/disapprove/{id}','admincontroller@disapprove');
-Route::get('/qzwf/agentapprove/{id}','admincontroller@agentapprove');
-Route::get('/qzwf/agentdisapprove/{id}','admincontroller@agentdisapprove');
-Route::get('/qzwf/profile/{id}','admincontroller@artisan');
-Route::get('/qzwf/agentprofile/{id}','admincontroller@agent');
+Route::get('/qzwf/approve/{id}','adminController@approve');
+Route::get('/qzwf/disapprove/{id}','adminController@disapprove');
+Route::get('/qzwf/agentapprove/{id}','adminController@agentapprove');
+Route::get('/qzwf/agentdisapprove/{id}','adminController@agentdisapprove');
+Route::get('/qzwf/profile/{id}','adminController@artisan');
+Route::get('/qzwf/agentprofile/{id}','adminController@agent');
 
 
 Route::get('/agent/login',function ()

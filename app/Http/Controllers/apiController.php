@@ -200,6 +200,28 @@ class ApiController extends Controller
         return response()->json($artisans);
     }
 
+    public function servefilter()
+    {
+        if (request('serveId')!=null) {
+            $serveId=request('serveId');
+            $artisans['status']="success";
+            $artisans['artisans']=DB::table('artisans')
+            ->join('offered_by','offered_by.artisan_id','=','artisans.id')
+            ->join('services','services.id','=','offered_by.service_id')
+            ->join('cities','cities.id','=','artisans.city_id')
+            ->join('states','states.id','=','cities.state_id')
+            ->select('artisans.id as ID','artisans.*','states.*','cities.*', DB::raw("group_concat(DISTINCT services.service ORDER BY services.service DESC SEPARATOR ', ') as services"))
+            ->whereRaw('artisans.enabled=? and services.id=?',[1,$serveId])
+            ->groupBy('artisans.id') 
+            ->get();
+            return response()->json($artisans);
+        }else {
+            $error['status']='failure';
+            $error['message']="service";
+            return response()->json($error);
+        }
+    }
+
 
 
 
